@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { SiDevpost, SiGithub, SiLinkedin, SiGmail } from "react-icons/si";
 import { Devpost } from "@/components/icons/devpost";
 
 import { Button } from "@/components/ui/button";
@@ -58,9 +59,9 @@ export default function Portfolio() {
               <button
                 key={item.label}
                 onClick={() => item.ref.current?.scrollIntoView({ behavior: "smooth" })}
-                className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:font-cedarville px-3 py-1"
-                onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-                onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+                className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:font-medium px-3 py-1"
+                // onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+                // onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
               >
                 {item.label}
               </button>
@@ -110,12 +111,12 @@ export default function Portfolio() {
                   <ColorfulText text=" Heral Kumar" />
                 </h1>
                 <p className="text-muted-foreground md:text-xl tracking-wider">
-                Math major by degree, designer at heart. I love creating clean, intuitive experiences that make users think, "This makes so much sense!”
+                  Math major by degree, designer at heart. I love creating clean, intuitive experiences that make users think, "This makes so much sense!”
                 </p>
               </div>
               <div className="space-y-2 text-muted-foreground tracking-wider">
                 <p>
-                I’m all about smart UX, sleek interfaces, and the little details that make a big difference. Also, I have a slight obsession with cheesecake and beautifully designed websites.
+                  I'm all about smart UX, sleek interfaces, and the little details that make a big difference. Also, I have a slight obsession with cheesecake and beautifully designed websites.
                 </p>
                 <p>
                   Let's build something users will love.✨
@@ -123,34 +124,34 @@ export default function Portfolio() {
               </div>
               <div className="flex justify-start gap-4">
                 <a
-                  href="#"
-                  className="rounded-full border border-rose-200 bg-transparent p-2 text-rose-500 transition-colors hover:border-rose-300 hover:from-rose-100 hover:to-rose-200"
+                  href="https://devpost.com/Heral"
+                  className="clickable rounded-full border border-teal-600 bg-transparent p-2 transition-colors hover:border-[#003E54]"
                 >
                   <span className="sr-only">Devpost</span>
-                  <Devpost className="h-5 w-5" />
+                  <SiDevpost className="h-5 w-5 dark:text-white text-[#003E54]"/>
                 </a>
                 <a
-                  href="#"
-                  className="rounded-full border border-teal-200 bg-transparent p-2 text-teal-500 transition-colors hover:border-teal-300 hover:from-teal-100 hover:to-teal-200"
+                  href="https://www.linkedin.com/in/heral-kumar/"
+                  className="clickable rounded-full border border-gray-400 bg-transparent p-2 transition-colors hover:border-gray-500"
                 >
                   <span className="sr-only">GitHub</span>
-                  <Github className="h-5 w-5" />
+                  <SiGithub className="h-5 w-5" />
                 </a>
                 <a
-                  href="#"
-                  className="rounded-full border border-rose-200 bg-transparent p-2 text-blue-500 transition-colors hover:border-rose-300 hover:from-rose-100 hover:to-rose-200"
+                  href="https://www.linkedin.com/in/heral-kumar/"
+                  className="clickable rounded-full border border-[#006eac] bg-transparent p-2 transition-colors hover:border-[#00568C]"
                 >
                   <span className="sr-only">LinkedIn</span>
-                  <Linkedin className="h-5 w-5 fill-current" />
+                  <SiLinkedin className="h-5 w-5 text-[#006eac] dark:text-white" />
                 </a>
                 <a
-                  href="mailto:jane@example.com"
-                  className="rounded-full border border-teal-200 bg-transparent p-2 text-teal-500 transition-colors hover:border-teal-300 hover:from-teal-100 hover:to-teal-200"
+                  href="mailto:heralkumar212@gmail.com"
+                  className="clickable rounded-full border border-[#d74f42] bg-transparent p-2 transition-colors hover:border-[#CC332F]"
                 >
                   <span className="sr-only">Email</span>
-                  <Mail className="h-5 w-5" />
+                  <SiGmail className="h-5 w-5 dark:text-white text-[#EA4335]" />
                 </a>
-              </div>
+                </div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
