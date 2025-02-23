@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 import { Devpost } from "@/components/icons/devpost";
 
 import { Button } from "@/components/ui/button";
@@ -30,11 +30,22 @@ const dancingScript = Dancing_Script({
 // })
 
 export default function Portfolio() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const aboutRef = useRef<HTMLDivElement>(null);
   const experienceRef = useRef<HTMLDivElement>(null);
   const SkillsRef = useRef<HTMLDivElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+
+  const menuItems = [
+    { label: "About", ref: aboutRef },
+    { label: "Experience", ref: experienceRef },
+    { label: "Skills", ref: SkillsRef },
+    { label: "Work", ref: workRef },
+    { label: "Contact", ref: contactRef },
+  ]
 
   return (
     <div className={`min-h-screen bg-background ${dancingScript.variable}`}>
@@ -42,60 +53,45 @@ export default function Portfolio() {
       <header className="fixed top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
         <nav className="container flex h-16 items-center justify-between">
           <Logo />
-          <div className="flex items-center gap-6">
-            <button
-              onClick={() =>
-                aboutRef.current?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
-            >
-              About
-            </button>
-            <button
-              onClick={() =>
-                experienceRef.current?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "font-medium")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "font-medium")}
-            >
-              Experience
-            </button>
-            <button
-              onClick={() =>
-                SkillsRef.current?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
-            >
-              Skills
-            </button>
-            <button
-              onClick={() =>
-                workRef.current?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
-            >
-              Work
-            </button>
-            <button
-              onClick={() =>
-                contactRef.current?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
-            >
-              Contact
-            </button>
+          <div className="hidden md:flex items-center gap-6">
+            {menuItems.map((item) => (
+              <button
+                key={item.label}
+                onClick={() => item.ref.current?.scrollIntoView({ behavior: "smooth" })}
+                className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:font-cedarville px-3 py-1"
+                onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+                onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+              >
+                {item.label}
+              </button>
+            ))}
             <ThemeToggle />
           </div>
+          <div className="md:hidden">
+            <button onClick={toggleMenu} className="p-2">
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
         </nav>
+        {isMenuOpen && (
+          <div className="md:hidden bg-background border-t">
+            {menuItems.map((item) => (
+              <button
+                key={item.label}
+                onClick={() => {
+                  item.ref.current?.scrollIntoView({ behavior: "smooth" })
+                  setIsMenuOpen(false)
+                }}
+                className="block w-full text-left px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted"
+              >
+                {item.label}
+              </button>
+            ))}
+            <div className="px-4 py-2">
+              <ThemeToggle />
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="container pt-24">
@@ -106,7 +102,7 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="flex flex-col justify-center space-y-4 pl-10 "
+              className="flex flex-col justify-center space-y-4 lg:pl-10 sm:pl-0 "
             >
               <div className="space-y-2">
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -122,7 +118,7 @@ export default function Portfolio() {
                 I’m all about smart UX, sleek interfaces, and the little details that make a big difference. Also, I have a slight obsession with cheesecake and beautifully designed websites.
                 </p>
                 <p>
-                Let’s build something users will love. ✨
+                  Let's build something users will love.✨
                 </p>
               </div>
               <div className="flex justify-start gap-4">

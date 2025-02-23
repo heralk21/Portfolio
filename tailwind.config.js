@@ -11,10 +11,10 @@ module.exports = {
       screens: {
         "2xl": "1400px",
       },
-      extend: {
-        fontFamily: {
-          cursive: ["Cedarville Cursive", "cursive"],
-        },
+    },
+    extend: {
+      fontFamily: {
+        cursive: ["Cedarville Cursive", "cursive"],
       },
     },
     extend: {
