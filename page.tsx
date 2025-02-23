@@ -131,7 +131,7 @@ export default function Portfolio() {
                   <SiDevpost className="h-5 w-5 dark:text-white text-[#003E54]"/>
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/heral-kumar/"
+                  href="https://github.com/heralk21"
                   className="clickable rounded-full border border-gray-400 bg-transparent p-2 transition-colors hover:border-gray-500"
                 >
                   <span className="sr-only">GitHub</span>
