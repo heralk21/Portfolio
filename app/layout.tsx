@@ -7,6 +7,9 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: "Heral Kumar",
   description: "Heral Kumar's Portfolio",
+  icons: {
+    icon: "/website logo heral.png",  
+  }
 };
 
 export const viewport = {

@@ -59,7 +59,7 @@ export default function Portfolio() {
               <button
                 key={item.label}
                 onClick={() => item.ref.current?.scrollIntoView({ behavior: "smooth" })}
-                className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:font-medium px-3 py-1"
+                className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary/70 hover:font-medium px-3 py-1 dark:hover:text-rose-500"
                 // onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
                 // onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
               >
