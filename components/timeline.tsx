@@ -68,27 +68,30 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
         >
           <div className="relative space-y-4 rounded-2xl border bg-gradient-to-br from-rose-50 to-teal-50 p-6 shadow-lg transition-colors dark:from-rose-600/50 dark:to-blue-800/50">
             <div className="flex flex-col gap-2">
-              <h3 className="font-cursive text-2xl gradient-text">{item.title}</h3>
+              <h3 className="font-medium text-2xl gradient-text">{item.title}</h3>
               <p className="font-medium text-muted-foreground">{item.company}</p>
               <span className="block text-sm text-muted-foreground md:hidden">{item.year}</span>
-            </div>
-            <div className="prose prose-sm dark:prose-invert">{item.content}</div>
-            <div className="grid grid-cols-2 gap-4">
+            </div> 
+            <div className="grid grid-cols-2 gap-4 mt-4">
+            {item.image1 && (
               <Image
-                src={item.image1 || "/placeholder.svg?height=200&width=300"}
+                src={item.image1}
                 alt={`${item.title} - Image 1`}
                 width={300}
                 height={200}
                 className="rounded-lg object-cover w-full h-40"
               />
+            )}
+            {item.image2 && (
               <Image
-                src={item.image2 || "/placeholder.svg?height=200&width=300"}
+                src={item.image2}
                 alt={`${item.title} - Image 2`}
                 width={300}
                 height={200}
                 className="rounded-lg object-cover w-full h-40"
               />
-            </div>
+            )}
+          </div>
           </div>
         </motion.div>
 
@@ -109,7 +112,7 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
             }}
             className="relative h-16 w-16 rounded-full bg-background shadow-lg flex items-center justify-center"
           >
-            <span className="font-cursive text-xl gradient-text">{item.year.split(" ")[0]}</span>
+            <span className="font-medium text-xl gradient-text">{item.year.split(" ")[0]}</span>
             <motion.div
               initial={{ scale: 1.2, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

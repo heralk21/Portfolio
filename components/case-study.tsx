@@ -1,51 +1,54 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useEffect, useId, useRef, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { X } from "lucide-react"
-import { useOutsideClick } from "@/hooks/use-outside-click"
-import { Compare } from "@/components/ui/compare"
+import Image from "next/image";
+import { useEffect, useId, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
+import { useOutsideClick } from "@/hooks/use-outside-click";
+import { Compare } from "@/components/ui/compare";
 
 export interface CaseStudy {
-  title: string
-  description: string
-  image: string
-  challenge: string
-  challengeImage: string
-  solution: string
-  solutionImage: string
-  result: string
-  resultImage: string
-  beforeImage: string
-  afterImage: string
-  tags: string[]
-  link?: string
+  title: string;
+  description: string;
+  image: string;
+  challenge: string;
+  challengeImage: string;
+  solution: string;
+  solutionImage: string;
+  result: string;
+  resultImage: string;
+  researchImage1: string;
+  researchImage2: string;
+  researchDescription: string;
+  beforeImage: string;
+  afterImage: string;
+  tags: string[];
+  link?: string;
 }
 
 export function CaseStudyList({ cases }: { cases: CaseStudy[] }) {
-  const [active, setActive] = useState<CaseStudy | null>(null)
-  const ref = useRef<HTMLDivElement>(null)
-  const id = useId()
+  const [active, setActive] = useState<CaseStudy | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const id = useId();
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setActive(null)
+        setActive(null);
       }
     }
 
     if (active) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"
+      document.body.style.overflow = "auto";
     }
 
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [active])
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [active]);
 
-  useOutsideClick(ref, () => setActive(null))
+  useOutsideClick(ref, () => setActive(null));
 
   return (
     <>
@@ -105,11 +108,14 @@ export function CaseStudyList({ cases }: { cases: CaseStudy[] }) {
                   <div>
                     <motion.h3
                       layoutId={`title-${active.title}-${id}`}
-                      className="font-cursive text-2xl sm:text-3xl gradient-text"
+                      className="font-medium text-2xl sm:text-3xl gradient-text"
                     >
                       {active.title}
                     </motion.h3>
-                    <motion.p layoutId={`description-${active.description}-${id}`} className="text-muted-foreground">
+                    <motion.p
+                      layoutId={`description-${active.description}-${id}`}
+                      className="text-muted-foreground"
+                    >
                       {active.description}
                     </motion.p>
                   </div>
@@ -119,50 +125,103 @@ export function CaseStudyList({ cases }: { cases: CaseStudy[] }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                    className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2"
                   >
                     <div className="rounded-lg border bg-card/50 p-4 backdrop-blur-sm flex flex-col gap-4">
-                      <h4 className="font-cursive text-xl text-rose-600">The Challenge</h4>
-                      <Image
-                        src={active.challengeImage || "/placeholder.svg"}
-                        alt="Challenge"
-                        width={300}
-                        height={200}
-                        className="rounded-lg object-cover w-full h-40"
-                      />
-                      <p className="text-sm text-muted-foreground">{active.challenge}</p>
+                      <h4 className="font-medium text-xl text-rose-600">
+                        The Challenge
+                      </h4>
+                      {active.challengeImage && (
+                        <Image
+                          src={active.challengeImage || "/placeholder.svg"}
+                          alt="Challenge"
+                          width={300}
+                          height={200}
+                          className="rounded-lg object-cover w-full h-50"
+                        />
+                      )}
+                      <p className="text-sm text-muted-foreground">
+                        {active.challenge}
+                      </p>
                     </div>
-                    <div className="rounded-lg border bg-card/50 p-4 backdrop-blur-sm flex flex-col gap-4">
-                      <h4 className="font-cursive text-xl text-teal-600">The Solution</h4>
-                      <Image
-                        src={active.solutionImage || "/placeholder.svg"}
-                        alt="Solution"
-                        width={300}
-                        height={200}
-                        className="rounded-lg object-cover w-full h-40"
-                      />
-                      <p className="text-sm text-muted-foreground">{active.solution}</p>
-                    </div>
-                    <div className="rounded-lg border bg-card/50 p-4 backdrop-blur-sm sm:col-span-2 lg:col-span-1 flex flex-col gap-4">
-                      <h4 className="font-cursive text-xl gradient-text">The Result</h4>
-                      <Image
-                        src={active.resultImage || "/placeholder.svg"}
-                        alt="Result"
-                        width={300}
-                        height={200}
-                        className="rounded-lg object-cover w-full h-40"
-                      />
-                      <p className="text-sm text-muted-foreground">{active.result}</p>
-                    </div>
+
+                    {active.solution && (
+                      <div className="rounded-lg border bg-card/50 p-4 backdrop-blur-sm flex flex-col gap-4">
+                        <h4 className="font-medium text-xl text-teal-600">
+                          The Solution
+                        </h4>
+                        {active.solutionImage && (
+                          <Image
+                            src={active.solutionImage || "/placeholder.svg"}
+                            alt="Solution"
+                            width={300}
+                            height={200}
+                            className="rounded-lg object-cover w-full h-40"
+                          />
+                        )}
+                        <p className="text-sm text-muted-foreground">
+                          {active.solution}
+                        </p>
+                      </div>
+                    )}
+
+                    {active.result && (
+                      <div className="rounded-lg border bg-card/50 p-4 backdrop-blur-sm sm:col-span-2 lg:col-span-1 flex flex-col gap-4">
+                        <h4 className="font-medium text-xl gradient-text">
+                          The Result
+                        </h4>
+                        {active.resultImage && (
+                          <Image
+                            src={active.resultImage || "/placeholder.svg"}
+                            alt="Result"
+                            width={300}
+                            height={200}
+                            className="rounded-lg object-cover w-full h-50"
+                          />
+                        )}
+                        <p className="text-sm text-muted-foreground">
+                          {active.result}
+                        </p>
+                      </div>
+                    )}
                   </motion.div>
 
-                  <div className="flex justify-center">
-                    <Compare
-                      firstImage={active.beforeImage || "/placeholder.svg"}
-                      secondImage={active.afterImage || "/placeholder.svg"}
-                      className="w-full max-w-2xl h-[300px] rounded-lg"
-                    />
-                  </div>
+                  {active.researchDescription && (
+                    <div>
+                      <h4 className="font-medium text-xl text-teal-600">
+                        UX Research
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Image
+                          src={active.researchImage1 || "/placeholder.svg"}
+                          alt="Solution"
+                          width={300}
+                          height={300}
+                          className="rounded-lg object-cover w-full h-50"
+                        />
+                        <Image
+                          src={active.researchImage2 || "/placeholder.svg"}
+                          alt="Result"
+                          width={300}
+                          height={300}
+                          className="rounded-lg object-cover w-full h-50"
+                        />
+                      </div>
+                      <p className="text-sm text-muted-foreground pt-4">
+                        {active.researchDescription}
+                      </p>
+                    </div>
+                  )}
+
+                  {active.beforeImage && (
+                    <div className="flex justify-center">
+                      <Compare
+                        firstImage={active.beforeImage || "/placeholder.svg"}
+                        secondImage={active.afterImage || "/placeholder.svg"}
+                        className="w-full max-w-2xl h-[300px] rounded-lg"
+                      />
+                    </div>
+                  )}
 
                   <div className="flex flex-wrap gap-2">
                     {active.tags.map((tag) => (
@@ -216,7 +275,7 @@ export function CaseStudyList({ cases }: { cases: CaseStudy[] }) {
               <div className="flex justify-center items-center flex-col">
                 <motion.h3
                   layoutId={`title-${caseStudy.title}-${id}`}
-                  className="font-cursive text-xl gradient-text text-center md:text-left"
+                  className="font-medium text-xl gradient-text text-center md:text-left"
                 >
                   {caseStudy.title}
                 </motion.h3>
@@ -231,7 +290,7 @@ export function CaseStudyList({ cases }: { cases: CaseStudy[] }) {
                 {caseStudy.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 text-xs rounded-full bg-gray-200 text-black dark:bg-white dark:bg-white-300/0 text-black"
+                    className="px-2 py-0.5 text-xs rounded-full bg-gray-200 dark:bg-white dark:bg-white-300/0 text-black"
                   >
                     {tag}
                   </span>
@@ -242,6 +301,5 @@ export function CaseStudyList({ cases }: { cases: CaseStudy[] }) {
         ))}
       </ul>
     </>
-  )
+  );
 }
-

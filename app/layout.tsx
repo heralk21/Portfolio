@@ -4,9 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import type React from "react" // Added import for React
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-    generator: 'v0.dev'
+  title: "Heral Kumar",
+  description: "Portfolio of Heral Kumar",
 }
 
 export default function RootLayout({
@@ -17,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
         </ThemeProvider>
       </body>

@@ -1,85 +1,95 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import Image from "next/image"
-import { motion } from "framer-motion"
-import { Github, Linkedin, Mail } from "lucide-react"
-import { Devpost } from "@/components/icons/devpost"
+import { useRef } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { Devpost } from "@/components/icons/devpost";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { CaseStudyList } from "@/components/case-study"
-import { Dancing_Script, Cedarville_Cursive } from "next/font/google"
-import { Timeline } from "./timeline"
-import ColorfulText from "@/components/colorful-text"
-import { SkillsSection } from "@/components/skills-section"
-import { ThemeToggle } from "@/components/theme-toggle"
-import Logo from "@/components/logo"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { CaseStudyList } from "@/components/case-study";
+import { Dancing_Script } from "next/font/google";
+import { Timeline } from "./timeline";
+import ColorfulText from "@/components/colorful-text";
+import { SkillsSection } from "@/components/skills-section";
+import { ThemeToggle } from "@/components/theme-toggle";
+import Logo from "@/components/logo";
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
   variable: "--font-dancing",
-})
+});
 
-const cedarvilleCursive = Cedarville_Cursive({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-cedarville",
-})
+// const cedarvilleCursive = Cedarville_Cursive({
+//   weight: "400",
+//   subsets: ["latin"],
+//   variable: "--font-cedarville",
+// })
 
 export default function Portfolio() {
-  const aboutRef = useRef<HTMLDivElement>(null)
-  const experienceRef = useRef<HTMLDivElement>(null)
-  const SkillsRef = useRef<HTMLDivElement>(null)
-  const workRef = useRef<HTMLDivElement>(null)
-  const contactRef = useRef<HTMLDivElement>(null)
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const experienceRef = useRef<HTMLDivElement>(null);
+  const SkillsRef = useRef<HTMLDivElement>(null);
+  const workRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className={`min-h-screen bg-background ${dancingScript.variable} ${cedarvilleCursive.variable}`}>
+    <div className={`min-h-screen bg-background ${dancingScript.variable}`}>
       <div className="fixed inset-0 bg-gradient-radial from-rose-100/30 via-background to-background dark:from-rose-950/30 -z-10" />
       <header className="fixed top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
         <nav className="container flex h-16 items-center justify-between">
           <Logo />
           <div className="flex items-center gap-6">
             <button
-              onClick={() => aboutRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:font-cedarville px-3 py-1"
-              onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+              onClick={() =>
+                aboutRef.current?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
+              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
             >
               About
             </button>
             <button
-              onClick={() => experienceRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:font-cursive px-3 py-1"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "font-cursive")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "font-cursive")}
+              onClick={() =>
+                experienceRef.current?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
+              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "font-medium")}
+              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "font-medium")}
             >
               Experience
             </button>
             <button
-              onClick={() => SkillsRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary  hover:font-cedarville px-3 py-1"
-              onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+              onClick={() =>
+                SkillsRef.current?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
+              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
             >
               Skills
             </button>
             <button
-              onClick={() => workRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary  hover:font-cedarville px-3 py-1"
-              onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+              onClick={() =>
+                workRef.current?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
+              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
             >
               Work
             </button>
             <button
-              onClick={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
-              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary  hover:font-cedarville px-3 py-1"
-              onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+              onClick={() =>
+                contactRef.current?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary hover:scale-110 px-3 py-1"
+              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
             >
               Contact
             </button>
@@ -89,7 +99,7 @@ export default function Portfolio() {
       </header>
 
       <main className="container pt-24">
-        <section ref={aboutRef} className="py-24 lg:py-32">
+        <section ref={aboutRef} className="py-10">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -104,18 +114,15 @@ export default function Portfolio() {
                   <ColorfulText text=" Heral Kumar" />
                 </h1>
                 <p className="text-muted-foreground md:text-xl tracking-wider">
-                  A UI/UX designer with 5+ years of experience creating user-centered digital experiences.
+                Math major by degree, designer at heart. I love creating clean, intuitive experiences that make users think, "This makes so much sense!”
                 </p>
               </div>
               <div className="space-y-2 text-muted-foreground tracking-wider">
                 <p>
-                  I specialize in designing intuitive interfaces that bridge the gap between user needs and business
-                  goals. My approach combines strategic thinking with creative problem-solving to deliver impactful
-                  digital solutions.
+                I’m all about smart UX, sleek interfaces, and the little details that make a big difference. Also, I have a slight obsession with cheesecake and beautifully designed websites.
                 </p>
                 <p>
-                  Currently working as a Senior Product Designer at Tech Corp, where I lead the design of their flagship
-                  product used by millions of users worldwide.
+                Let’s build something users will love. ✨
                 </p>
               </div>
               <div className="flex justify-start gap-4">
@@ -135,7 +142,7 @@ export default function Portfolio() {
                 </a>
                 <a
                   href="#"
-                  className="rounded-full border border-rose-200 bg-transparent p-2 text-rose-500 transition-colors hover:border-rose-300 hover:from-rose-100 hover:to-rose-200"
+                  className="rounded-full border border-rose-200 bg-transparent p-2 text-blue-500 transition-colors hover:border-rose-300 hover:from-rose-100 hover:to-rose-200"
                 >
                   <span className="sr-only">LinkedIn</span>
                   <Linkedin className="h-5 w-5 fill-current" />
@@ -179,68 +186,67 @@ export default function Portfolio() {
             <h2
               className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
               //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.fontFamily = "Arial, sans-serif")
+              }
             >
               Experience
             </h2>
-            <p className="text-muted-foreground">A timeline of my professional journey.</p>
+            <p className="text-muted-foreground">
+              A timeline of my professional journey.
+            </p>
           </motion.div>
           <Timeline
             data={[
               {
-                year: "2023 - Present",
-                title: "Senior Product Designer",
-                company: "Tech Corp",
+                year: "2024 - Present",
+                title: "Senior Orientation Leader",
+                company: "University of British Columbia",
                 content: (
                   <p>
-                    Leading the design of flagship products and mentoring junior designers. Responsible for establishing
-                    design systems, conducting user research, and implementing design thinking methodologies across
-                    multiple teams.
+                    Leading and mentoring a team of 10+ orientation leaders,
+                    ensuring the success of 5+ major university events.
+                    Organized a Transfer Student Social Meet with 100+
+                    attendees, achieving a 93% positive feedback rate. Enhanced
+                    team collaboration and inclusivity, driving a 19% increase
+                    in event participation compared to previous years.
                   </p>
                 ),
-                image1:
-                  "https://sjc.microlink.io/kd_4jz-LD8Le8kK5mKa3kRcz_40cL4TYGJfy2NqJimsTQ-LIXeWiZsFg-TT5eaGiz86L7Yk8FYqXL8Y2fdrj7w.jpeg",
-                image2: "/placeholder.svg?height=200&width=300&text=Tech+Corp+Project",
+                image1: "/SeniorOL1.jpg",
+                image2: "/SeniorOL2.jpg",
               },
               {
-                year: "2021 - 2023",
-                title: "UX Designer",
-                company: "Design Studio Inc",
+                year: "2024",
+                title: "Coding and Robotics Tutor",
+                company: "Wize Computing Academy",
                 content: (
                   <p>
-                    Collaborated with cross-functional teams to deliver user-centered solutions. Led the redesign of
-                    major client platforms, resulting in a 40% increase in user engagement and 25% reduction in
-                    user-reported issues.
+                    Taught 10+ students aged 10–12 using Python and LEGO
+                    Education SPIKE Prime kits for hands-on coding and robotics
+                    projects. Sent regular individual progress reports to
+                    parents, fostering transparency and tracking improvements.
+                    Cultivated problem-solving and critical-thinking skills,
+                    enhancing students’ confidence in technology and coding.
                   </p>
                 ),
-                image1: "/placeholder.svg?height=200&width=300&text=UX+Design+Process",
-                image2: "/placeholder.svg?height=200&width=300&text=Client+Platform+Redesign",
+                image1: "/Wize_Academy3.jpg",
+                image2: "/Wize_Academy2.jpg",
               },
               {
-                year: "2019 - 2021",
-                title: "UI Designer",
-                company: "Creative Agency",
+                year: "2023 - 2023",
+                title: "Orientation Leader",
+                company: "University of British Columbia",
                 content: (
                   <p>
-                    Created visually appealing interfaces for web and mobile applications. Developed and maintained
-                    design systems for multiple clients, ensuring consistency across all digital touchpoints.
+                    Led orientation groups of 15+ high school students,
+                    fostering a welcoming and inclusive community. Organized
+                    engaging activities that boosted student satisfaction by
+                    57%. Collaborated with peers and staff to deliver seamless
+                    events, strengthening communication and teamwork skills.
                   </p>
                 ),
-                image1: "/placeholder.svg?height=200&width=300&text=Web+App+UI",
-                image2: "/placeholder.svg?height=200&width=300&text=Mobile+App+UI",
-              },
-              {
-                year: "2018 - 2019",
-                title: "Junior Designer",
-                company: "Startup Hub",
-                content: (
-                  <p>
-                    Started my journey in digital product design. Worked on various startup projects, gaining hands-on
-                    experience in rapid prototyping, user testing, and iterative design processes.
-                  </p>
-                ),
-                image1: "/placeholder.svg?height=200&width=300&text=Prototype+Sketch",
-                image2: "/placeholder.svg?height=200&width=300&text=User+Testing+Session",
+                image1: "/OL1.jpg",
+                image2: "/OL2.jpg",
               },
             ]}
           />
@@ -261,69 +267,105 @@ export default function Portfolio() {
           >
             <h2
               className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
-              onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
             >
               Selected Projects
             </h2>
-            <p className="text-muted-foreground">A collection of projects I've worked on.</p>
+            <p className="text-muted-foreground">
+              A collection of projects I've worked on.
+            </p>
           </motion.div>
           <div className="mt-8">
             <CaseStudyList
               cases={[
                 {
-                  title: "FinTech App Redesign",
-                  description: "A complete overhaul of a financial management application",
-                  image: "/placeholder.svg",
+                  title: "Seelie – Banking the GenZ Way",
+                  description:
+                    "A user-centric financial management app tailored for Gen Z, providing interactive tools for expense tracking, savings visualization, and financial literacy.",
+                  image: "/seelie.png",
                   challenge:
-                    "The existing app had poor user engagement and confusing navigation, leading to customer frustration and increased support tickets.",
-                  challengeImage: "/placeholder.svg",
-                  solution:
-                    "Implemented a new information architecture and streamlined navigation. Created custom visualization components.",
+                    "Many young users struggle with understanding financial concepts, leading to poor money management habits.",
+                  challengeImage: "/Seelie_challenge.jpg",
+                  solution: "",
                   solutionImage: "/placeholder.svg",
                   result:
-                    "40% reduction in support tickets, 65% increase in daily active users, and 85% positive feedback on the new interface.",
-                  resultImage: "/placeholder.svg",
-                  beforeImage: "/placeholder.svg",
+                    "Improved financial awareness among users through a combination of data-driven insights and engaging educational content.",
+                  resultImage: "/Seelie_result.jpg",
+                  beforeImage: "",
                   afterImage: "/placeholder.svg",
-                  tags: ["UX Design", "UI Design", "Financial Services", "Data Visualization"],
-                  link: "#",
+                  researchImage1: "/Seelie_research1.jpg",
+                  researchImage2: "/Seelie_research2.jpg",
+                  researchDescription:
+                    "Conducted user research with surveys and interviews to identify key pain points. Designed an interactive prototype in Figma with financial tools such as expense categorization, savings tracking, and financial literacy videos.",
+                  tags: [
+                    "UX Design",
+                    "Financial Literacy",
+                    "Figma",
+                    "User Research",
+                    "Prototyping",
+                    "FinTech",
+                  ],
+                  link: "https://www.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?node-id=20-9&t=1WSiAQHF0OU7TS85-1&starting-point-node-id=20%3A9",
                 },
                 {
-                  title: "E-commerce Platform",
-                  description: "User experience design for an online marketplace",
-                  image: "/placeholder.svg",
+                  title: "RecoverEase – Lost and Found Management System",
+                  description:
+                    "A full-stack web application designed to streamline lost-and-found item tracking for university campuses.",
+                  image: "/RecoverEase.jpg",
                   challenge:
-                    "The client needed a scalable e-commerce platform that could handle multiple vendors while providing a seamless shopping experience.",
-                  challengeImage: "/placeholder.svg",
+                    "Traditional lost-and-found systems were inefficient, relying on manual tracking methods that led to frequent delays, misplaced items, and a lack of transparency in the process. University staff struggled to manage high volumes of lost items effectively, and students found it difficult to retrieve their belongings in a timely manner.",
+                  challengeImage: "",
                   solution:
-                    "Designed a responsive interface with optimized checkout flow. Implemented advanced filtering and search capabilities.",
-                  solutionImage: "/placeholder.svg",
+                    "Built using Node.js, Express.js, Oracle RDBMS, HTML, CSS, and JavaScript to optimize item management. Implemented complex Oracle SQL queries supporting real-time search, aggregation, and nested grouping for better data handling.",
+                  solutionImage: "",
                   result:
-                    "28% increase in mobile conversions, 45% reduction in cart abandonment, and 60% improvement in vendor onboarding completion rate.",
-                  resultImage: "/placeholder.svg",
-                  beforeImage: "/placeholder.svg",
+                    "RecoverEase significantly improved operational efficiency by automating item categorization and retrieval processes. The real-time search functionality reduced item recovery time by 40%, while automated statistical reporting provided valuable insights into lost-and-found trends. Users reported a smoother experience, reducing frustration and increasing satisfaction with the system.",
+                  resultImage: "",
+                  beforeImage: "",
                   afterImage: "/placeholder.svg",
-                  tags: ["E-commerce", "Mobile Design", "User Research", "Prototyping"],
-                  link: "#",
+                  researchImage1: "",
+                  researchImage2: "",
+                  researchDescription: "",
+                  tags: [
+                    "Node.js",
+                    "Express.js",
+                    "JavaScript",
+                    "Oracle RDBMS",
+                    "SQL",
+                    "Full-Stack Development",
+                    "Web Development",
+                  ],
+                  link: "https://github.com/heralk21/RecoverEase",
                 },
                 {
-                  title: "Healthcare Dashboard",
-                  description: "Medical data visualization interface",
-                  image: "/placeholder.svg",
+                  title: "Predicting Risk of a Heart Attack",
+                  description:
+                    "A machine learning model designed to predict heart attack risk based on large health datasets.",
+                  image: "/HeartRisk.jpg",
                   challenge:
-                    "Healthcare providers needed a more efficient way to monitor patient data and make informed decisions quickly.",
-                  challengeImage: "/placeholder.svg",
+                    "Heart disease remains one of the leading causes of death worldwide, yet early risk detection is often challenging due to the complexity of medical data. Healthcare providers needed an efficient, data-driven approach to analyze large volumes of patient records, identify high-risk individuals, and provide timely interventions. Traditional diagnostic methods were time-consuming and sometimes lacked predictive accuracy.",
+                  challengeImage: "",
                   solution:
-                    "Created an intuitive dashboard with real-time data visualization. Implemented customizable views for different user roles.",
-                  solutionImage: "/placeholder.svg",
+                    "Developed a predictive model in R with 77% accuracy, processing and normalizing 10,000+ rows of health data. Utilized tidyverse, tidymodels, and ggplot2 for data analysis and visualization, incorporating feature engineering and exploratory data analysis (EDA) to enhance predictive performance.",
+                  solutionImage: "",
                   result:
-                    "50% reduction in time spent on data entry, 75% improvement in data accuracy, and 90% positive feedback from healthcare staff.",
-                  resultImage: "/placeholder.svg",
-                  beforeImage: "/placeholder.svg",
+                    "The model successfully provided healthcare professionals with actionable insights, allowing for early intervention and better patient care. By identifying key risk factors, the system helped prioritize high-risk individuals, improving efficiency in heart disease prevention strategies. Visualizations generated from the data allowed for easier interpretation and understanding, making the insights more accessible to medical professionals.",
+                  resultImage: "",
+                  beforeImage: "",
                   afterImage: "/placeholder.svg",
-                  tags: ["Healthcare", "Dashboard Design", "Data Visualization", "UX Research"],
-                  link: "#",
+                  researchImage1: "",
+                  researchImage2: "",
+                  researchDescription: "",
+                  tags: [
+                    "R",
+                    "Machine Learning",
+                    "Data Science",
+                    "Predictive Analytics",
+                    "Healthcare",
+                    "Data Visualization",
+                  ],
+                  link: "https://github.com/heralk21/Heart-Attack-Risk-Predictor---DSCI-Project",
                 },
               ]}
             />
@@ -331,7 +373,7 @@ export default function Portfolio() {
         </section>
 
         <section ref={contactRef} className="relative py-24 lg:py-32">
-          <div className="absolute inset-0 bg-gradient-radial from-teal-100/30 via-background to-background dark:from-teal-950/30" />
+          <div className="absolute inset-0" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -342,26 +384,42 @@ export default function Portfolio() {
             <div className="space-y-2 text-center">
               <h2
                 className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
-                onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-                onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+                //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
+                //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
               >
                 Let's Connect
               </h2>
-              <p className="text-muted-foreground">Have a project in mind? Let's discuss it.</p>
+              <p className="text-muted-foreground">
+                Have a project in mind? Let's discuss it.
+              </p>
             </div>
             <div className="rounded-2xl border bg-card/50 p-6 backdrop-blur-sm">
-              <form action="https://formspree.io/f/mdkalqko" method="POST" className="space-y-4">
+              <form
+                action="https://formspree.io/f/xeoedypk"
+                method="POST"
+                className="space-y-4"
+              >
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Enter your name" />
+                  <Input id="name" name="name" placeholder="Enter your name" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" placeholder="Enter your email" type="email" />
+                  <Input
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    type="email"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Message</Label>
-                  <Textarea className="min-h-[100px]" id="message" placeholder="Enter your message" />
+                  <Textarea
+                    className="min-h-[100px]"
+                    id="message"
+                    name="message"
+                    placeholder="Enter your message"
+                  />
                 </div>
                 <Button
                   className="w-full bg-gradient-to-r from-rose-100 to-teal-100 text-rose-900 hover:from-rose-500 hover:to-teal-500 hover:text-white dark:from-rose-600 dark:to-blue-800 dark:text-rose-100 dark:hover:from-purple-700 dark:hover:to-teal-700"
@@ -375,6 +433,5 @@ export default function Portfolio() {
         </section>
       </main>
     </div>
-  )
+  );
 }
-

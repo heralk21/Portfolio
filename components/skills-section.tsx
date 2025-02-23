@@ -69,7 +69,6 @@ export function SkillsSection() {
         className="space-y-2 text-center"
       >
         <h2 className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
-        onMouseEnter={(e) => e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive"}
         onMouseLeave={(e) => e.currentTarget.style.fontFamily = 'Arial, sans-serif'}>Skills & Tools</h2>
         <p className="text-muted-foreground">My toolkit, focusing on digital design.</p>
       </motion.div>
@@ -92,7 +91,7 @@ export function SkillsSection() {
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-transparent">
                   {category.icon}
                 </div>
-                <h3 className="font-cursive text-xl gradient-text">{category.title}</h3>
+                <h3 className="font-medium text-xl gradient-text">{category.title}</h3>
                 <SkillDescription category={category.title} />
               </div>
             ))}
