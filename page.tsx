@@ -196,7 +196,24 @@ export default function Portfolio() {
           <Timeline
             data={[
               {
-                year: "2024 - Present",
+                year: "Jan 2025 - Present",
+                title: "Web Designer & Developer",
+                company: "UBC iGem (International Genetically Engineered Machine Foundation)",
+                content: (
+                  <p>
+                    Designing and developing the 2025 UBC iGEM wiki website, 
+                    integrating a Mars-themed UI to communicate cyanobacteria research. 
+                    Revamping the UBC iGEM website, enhancing accessibility and UX with Figma, 
+                    wireframing, prototyping, and coding. Creating storytelling visuals for 
+                    educational outreach, including children’s storybooks simplifying 
+                    synthetic biology concepts.
+                  </p>
+                ),
+                image1: "/ubcigem1.png",
+                image2: "/ubcigem2.png",
+              },
+              {
+                year: "Apr 2024 - Present",
                 title: "Senior Orientation Leader",
                 company: "University of British Columbia",
                 content: (
@@ -213,7 +230,7 @@ export default function Portfolio() {
                 image2: "/SeniorOL2.jpg",
               },
               {
-                year: "2024",
+                year: "Sept 2024 - Dec 2024",
                 title: "Coding and Robotics Tutor",
                 company: "Wize Computing Academy",
                 content: (
@@ -230,7 +247,7 @@ export default function Portfolio() {
                 image2: "/Wize_Academy2.jpg",
               },
               {
-                year: "2023 - 2023",
+                year: "Jun 2023 - Apr 2024",
                 title: "Orientation Leader",
                 company: "University of British Columbia",
                 content: (
