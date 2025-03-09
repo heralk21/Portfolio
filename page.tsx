@@ -18,6 +18,9 @@ import ColorfulText from "@/components/colorful-text";
 import { SkillsSection } from "@/components/skills-section";
 import { ThemeToggle } from "@/components/theme-toggle";
 import Logo from "@/components/logo";
+import Link from "next/link";
+import { projects } from "./lib/projects";
+
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -279,111 +282,37 @@ export default function Portfolio() {
             transition={{ duration: 0.5 }}
             className="space-y-2 text-center"
           >
-            <h2
-              className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
-            >
-              Selected Projects
-            </h2>
-            <p className="text-muted-foreground">
-              A collection of projects I've worked on.
+            <p className="text-gray-300 mb-12 max-w-2xl">
+              Here's a collection of my recent work. Click on any project to view more details.
             </p>
-          </motion.div>
-          <div className="mt-8">
-            <CaseStudyList
-              cases={[
-                {
-                  title: "Seelie – Banking the GenZ Way",
-                  description:
-                    "A user-centric financial management app tailored for Gen Z, providing interactive tools for expense tracking, savings visualization, and financial literacy.",
-                  image: "/seelie.png",
-                  challenge:
-                    "Many young users struggle with understanding financial concepts, leading to poor money management habits.",
-                  challengeImage: "/Seelie_challenge.jpg",
-                  solution: "",
-                  solutionImage: "/placeholder.svg",
-                  result:
-                    "Improved financial awareness among users through a combination of data-driven insights and engaging educational content.",
-                  resultImage: "/Seelie_result.jpg",
-                  beforeImage: "",
-                  afterImage: "/placeholder.svg",
-                  researchImage1: "/Seelie_research1.jpg",
-                  researchImage2: "/Seelie_research2.jpg",
-                  researchDescription:
-                    "Conducted user research with surveys and interviews to identify key pain points. Designed an interactive prototype in Figma with financial tools such as expense categorization, savings tracking, and financial literacy videos.",
-                  tags: [
-                    "UX Design",
-                    "Financial Literacy",
-                    "Figma",
-                    "User Research",
-                    "Prototyping",
-                    "FinTech",
-                  ],
-                  link: "https://www.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?node-id=20-9&t=1WSiAQHF0OU7TS85-1&starting-point-node-id=20%3A9",
-                },
-                {
-                  title: "RecoverEase – Lost and Found Management System",
-                  description:
-                    "A full-stack web application designed to streamline lost-and-found item tracking for university campuses.",
-                  image: "/RecoverEase.jpg",
-                  challenge:
-                    "Traditional lost-and-found systems were inefficient, relying on manual tracking methods that led to frequent delays, misplaced items, and a lack of transparency in the process. University staff struggled to manage high volumes of lost items effectively, and students found it difficult to retrieve their belongings in a timely manner.",
-                  challengeImage: "",
-                  solution:
-                    "Built using Node.js, Express.js, Oracle RDBMS, HTML, CSS, and JavaScript to optimize item management. Implemented complex Oracle SQL queries supporting real-time search, aggregation, and nested grouping for better data handling.",
-                  solutionImage: "",
-                  result:
-                    "RecoverEase significantly improved operational efficiency by automating item categorization and retrieval processes. The real-time search functionality reduced item recovery time by 40%, while automated statistical reporting provided valuable insights into lost-and-found trends. Users reported a smoother experience, reducing frustration and increasing satisfaction with the system.",
-                  resultImage: "",
-                  beforeImage: "",
-                  afterImage: "/placeholder.svg",
-                  researchImage1: "",
-                  researchImage2: "",
-                  researchDescription: "",
-                  tags: [
-                    "Node.js",
-                    "Express.js",
-                    "JavaScript",
-                    "Oracle RDBMS",
-                    "SQL",
-                    "Full-Stack Development",
-                    "Web Development",
-                  ],
-                  link: "https://github.com/heralk21/RecoverEase",
-                },
-                {
-                  title: "Predicting Risk of a Heart Attack",
-                  description:
-                    "A machine learning model designed to predict heart attack risk based on large health datasets.",
-                  image: "/HeartRisk.jpg",
-                  challenge:
-                    "Heart disease remains one of the leading causes of death worldwide, yet early risk detection is often challenging due to the complexity of medical data. Healthcare providers needed an efficient, data-driven approach to analyze large volumes of patient records, identify high-risk individuals, and provide timely interventions. Traditional diagnostic methods were time-consuming and sometimes lacked predictive accuracy.",
-                  challengeImage: "",
-                  solution:
-                    "Developed a predictive model in R with 77% accuracy, processing and normalizing 10,000+ rows of health data. Utilized tidyverse, tidymodels, and ggplot2 for data analysis and visualization, incorporating feature engineering and exploratory data analysis (EDA) to enhance predictive performance.",
-                  solutionImage: "",
-                  result:
-                    "The model successfully provided healthcare professionals with actionable insights, allowing for early intervention and better patient care. By identifying key risk factors, the system helped prioritize high-risk individuals, improving efficiency in heart disease prevention strategies. Visualizations generated from the data allowed for easier interpretation and understanding, making the insights more accessible to medical professionals.",
-                  resultImage: "",
-                  beforeImage: "",
-                  afterImage: "/placeholder.svg",
-                  researchImage1: "",
-                  researchImage2: "",
-                  researchDescription: "",
-                  tags: [
-                    "R",
-                    "Machine Learning",
-                    "Data Science",
-                    "Predictive Analytics",
-                    "Healthcare",
-                    "Data Visualization",
-                  ],
-                  link: "https://github.com/heralk21/Heart-Attack-Risk-Predictor---DSCI-Project",
-                },
-              ]}
-            />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {projects.map((project) => (
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className="group block bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-700 transition-all duration-300"
+              >
+                <div className="aspect-video relative">
+                  <Image src={project.imageUrl || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
+                </div>
+                <div className="p-6">
+                  <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h2>
+                  <p className="text-gray-400 mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => (
+                      <span key={tech} className="px-2 py-1 bg-gray-800 rounded-full text-xs">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
+        </motion.div>
         </section>
 
         <section ref={contactRef} className="relative py-24 lg:py-32">
