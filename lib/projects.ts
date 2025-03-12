@@ -47,33 +47,33 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "project-one",
-    title: "Project One",
-    tagline: "Reimagining Social Interaction via Genuine Connections",
-    description: "A detailed description of your first project.",
+    slug: "Seelie",
+    title: "Seelie",
+    tagline: "Banking the GenZ way",
+    description: "A fintech app designed to empower Gen Z through engaging financial literacy and intuitive budgeting tools",
     fullDescription:
-      "This is a comprehensive explanation of what the project is about, the challenges faced, and how they were overcome. You can include multiple paragraphs here to fully describe your work, the technologies used, and the problems solved.",
-    technologies: ["React", "Next.js", "Tailwind CSS", "Figma", "User Research"],
+      "Seelie is an innovative fintech platform addressing the challenges faced by Gen Z in managing their finances. In an era where traditional banking feels overwhelming, Seelie simplifies complex financial concepts through interactive tutorials, real-time budgeting tools, and gamified learning experiences.\n\nThe project was driven by extensive user research and iterative testing. We prioritized clarity, simplicity, and user engagement in our design process. With a modern aesthetic and personalized insights, Seelie aims to make financial literacy accessible and enjoyable, ultimately empowering young adults to take control of their financial future.",
+    technologies: ["Figma", "FigJam", "Canva"],
     imageUrl: "/placeholder.svg?height=600&width=800",
     heroImage: "/placeholder.svg?height=1200&width=2000",
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com/username/project-one",
+    liveUrl: "https://www.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?node-id=20-9&p=f&t=d5H0H37oigekERrv-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=20%3A9",
+    //githubUrl: "https://github.com/username/project-one",
     featured: true,
     role: "UI/UX Designer",
-    timeline: "Jan 2023 - Mar 2023",
-    team: "Team of 3",
+    timeline: "Jan 2025 - Jan 2025",
+    team: "Team of 4",
     readTime: 10,
-    award: "UX Lauder 2024 Finalist & Best UI",
+    //award: "UX Lauder 2024 Finalist & Best UI",
     introduction:
-      "In today's digital landscape, social media platforms often prioritize quantity over quality when it comes to connections. This project aims to reimagine social interaction by creating a platform that encourages genuine, meaningful connections between users.\n\nThe challenge was to design an intuitive interface that promotes authentic sharing while maintaining user privacy and fostering a sense of community.",
+      "Financial literacy and budgeting are critical skills for building a secure financial future, yet many Gen Z users find traditional banking platforms confusing and unengaging. Seelie reimagines banking by combining interactive education with intuitive budgeting tools to empower young adults to manage their money confidently.\n\nThrough a user-centric design process, we transformed complex financial jargon into accessible, gamified lessons, making financial management both engaging and educational",
     overview:
-      "Project One is a mobile application designed to help users build deeper connections through guided prompts and meaningful interactions. The app encourages users to share small, authentic moments from their daily lives rather than curated highlights.\n\nThe project was developed as part of a 48-hour designathon, where our team identified the problem of shallow social media interactions and sought to create a solution that promotes genuine human connection.",
+      "Seelie is a mobile fintech application that bridges the gap between financial theory and everyday practice. The app offers a dynamic dashboard, real-time tracking of expenses and savings, and bite-sized tutorials that demystify key financial concepts. Developed over a three-month period, Seelie was born out of a commitment to making financial literacy approachable and enjoyable for Gen Z",
     problemStatement:
-      "How might we design a social platform that encourages authentic sharing and fosters meaningful connections in a digital world dominated by curated content and superficial interactions?",
+      "How might we reimagine digital banking services to make big banks feel approachable and transparent in their efforts to support Gen Z's financial goals and build lasting trust and loyalty?",
     solution:
-      "Our solution was to create a platform with two distinct sharing modes: 'My Friends Only' for sharing with existing connections, and 'Discover' for anonymous sharing with the broader community.\n\nThe app features daily prompts that encourage reflection and authentic sharing, a streak system that rewards consistent participation, and a clean, distraction-free interface that puts content first.",
-    solutionImage: "/placeholder.svg?height=800&width=1200",
-    figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/example",
+      "Our solution was to build an interactive fintech app that transforms traditional banking into a user-friendly experience. Seelie breaks down financial jargon into digestible lessons, offers personalized budgeting tools, and integrates gamified elements to motivate users to build healthier financial habits. By combining education with practical tools, Seelie makes money management accessible and engaging.",
+    solutionImage: "/Seelie_result.jpg",
+    figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?node-id=20-9",
     prototypeImages: [
       {
         src: "/placeholder.svg?height=600&width=800",
@@ -96,32 +96,32 @@ export const projects: Project[] = [
       {
         title: "Discover",
         description:
-          "We began by conducting user interviews to understand how people currently connect online and what frustrations they experience with existing social platforms. We discovered that many users feel social media has become performative rather than authentic.\n\nThrough competitive analysis, we identified gaps in the market where our solution could provide unique value.",
+          "We began by interviewing Gen Z users to understand their financial habits and the challenges they face with traditional banking platforms. Our research revealed that confusing financial terminology and outdated interfaces were major barriers to effective money management",
         image: "/placeholder.svg?height=800&width=1200",
       },
       {
         title: "Define",
         description:
-          "Based on our research, we defined our target users and created personas to guide our design decisions. We also established key metrics for success, including user engagement, retention, and reported feelings of connection.\n\nWe mapped the user journey to identify pain points and opportunities for creating meaningful interactions.",
+          "Using our research insights, we defined key pain points and developed detailed user personas. We set clear success metrics focused on enhancing financial literacy, improving budgeting efficiency, and increasing user engagement.",
         image: "/placeholder.svg?height=800&width=1200",
       },
       {
         title: "Develop",
         description:
-          "We conducted a design studio session where team members sketched potential solutions. After evaluating our ideas, we created low-fidelity wireframes to test the core user flow.\n\nBased on feedback, we refined our design and developed a high-fidelity prototype with a focus on creating a calm, distraction-free environment that encourages reflection and authentic sharing.",
+          "Our team brainstormed ideas and created low-fidelity wireframes to map out the core user flow. Through iterative usability tests and feedback sessions, we refined our concepts, ultimately developing a high-fidelity prototype that balanced functionality with a clean, modern design.",
         image: "/placeholder.svg?height=800&width=1200",
       },
       {
         title: "Deliver",
         description:
-          "We conducted usability testing with our prototype to validate our design decisions and identify areas for improvement. Based on user feedback, we made final refinements to the interface and interaction design.\n\nThe final design was presented to a panel of industry judges who awarded our project for its innovative approach to social connection and clean, intuitive interface.",
+          "In the final phase, we polished the design and integrated key features such as real-time data visualization and gamified learning modules. Extensive usability testing confirmed that Seelie offers an intuitive and engaging user experience, setting the stage for future development.",
         image: "/placeholder.svg?height=800&width=1200",
       },
     ],
     outcome:
-      "Our project received positive feedback from both users and judges, winning the Best UI award at the designathon. Users particularly appreciated the dual sharing modes and the focus on authentic connection.\n\nIf developed further, this platform has the potential to create a new category of social application that prioritizes depth over breadth in digital connections.",
+      "Seelie received enthusiastic feedback from industry experts, with many intrigued by the unique features it held. The app was recognized for its innovative approach. With its interactive features and educational focus, Seelie has the potential to redefine how Gen Z approaches personal finance and targets financial literacy.",
     reflection:
-      "This project taught me valuable lessons about designing for emotional needs rather than just functional requirements. I learned that creating spaces for vulnerability requires careful consideration of privacy, trust, and user comfort.\n\nIf I were to continue developing this concept, I would explore additional features for deepening connections over time and implement more robust privacy controls to ensure users feel safe sharing authentic moments.",
+      "Working on Seelie reinforced the value of user-centered design in fintech. The project taught me that simplifying complex financial information into engaging, interactive experiences is key to empowering users. Moving forward, I plan to explore additional personalization features and advanced data insights to further enhance the platform.",
     teamMembers: [
       {
         name: "Heral Kumar",
@@ -129,14 +129,19 @@ export const projects: Project[] = [
         link: "https://heralkumar.com",
       },
       {
-        name: "Team Member 2",
-        role: "Product Manager",
-        link: "https://example.com",
+        name: "Ruhani Mittal",
+        role: "UI/UX Designer",
+        //link: "https://example.com",
       },
       {
-        name: "Team Member 3",
-        role: "Developer",
-        link: "https://example.com",
+        name: "May Kyy",
+        role: "User Researcher",
+        //link: "https://example.com",
+      },
+      {
+        name: "Lydia Huang",
+        role: "User Researcher",
+        //link: "https://example.com",
       },
     ],
   },

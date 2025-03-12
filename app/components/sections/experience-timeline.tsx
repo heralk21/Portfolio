@@ -59,7 +59,7 @@ const TimelineItem = ({ item, index }: { item: TimelineEntry; index: number }) =
           index % 2 === 0 ? "md:[--align:end]" : "md:[--align:start]",
         )}
         style={{
-          textAlign: "var(--align)",
+          textAlign: "var(--align)" as TextAlign,
         }}
       >
         <motion.div

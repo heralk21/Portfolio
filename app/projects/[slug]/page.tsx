@@ -224,7 +224,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             {/* Next Project */}
             <div className="mt-16 pt-8 border-t border-gray-800">
               <Link
-                href="/work"
+                href="/?section=work"
                 className="inline-flex items-center text-gray-400 hover:text-white transition-colors mb-8"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />

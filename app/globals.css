@@ -74,9 +74,9 @@ body {
 }
 
 /* Custom cursor styles */
-* {
+/* * {
   cursor: none;
-}
+} */
 
 .custom-cursor {
   width: 9px;

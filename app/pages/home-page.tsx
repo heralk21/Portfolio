@@ -12,19 +12,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-// import { CaseStudyList } from "@/components/case-study";
+import { CaseStudyList } from "@/components/case-study";
 import { Dancing_Script } from "next/font/google";
 import { Timeline } from "./timeline";
-// import ColorfulText from "@/components/colorful-text";
-// import { SkillsSection } from "@/components/skills-section";
-// import { ThemeToggle } from "@/components/theme-toggle";
-// import Logo from "@/components/logo";
+import ColorfulText from "@/components/colorful-text";
+import { SkillsSection } from "@/components/skills-section";
+import { ThemeToggle } from "@/components/theme-toggle";
+import Logo from "@/components/logo";
 import Link from "next/link";
 import { projects } from "./lib/projects";
-import Logo from "./app/components/shared/site-logo";
-import { ThemeToggle } from "./app/components/shared/theme-switcher";
-import ColorfulText from "./app/components/shared/gradient-text";
-import { SkillsSection } from "./app/components/sections/skills-grid";
 
 
 const dancingScript = Dancing_Script({
@@ -38,7 +34,7 @@ const dancingScript = Dancing_Script({
 //   variable: "--font-cedarville",
 // })
 
-export default function Portfolio() {
+export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isScrolling, setIsScrolling] = useState(false);
