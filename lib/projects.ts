@@ -15,6 +15,11 @@ export type DesignProcessStep = {
   image?: string
 }
 
+export type Metric = {
+  number: string | number
+  label: string
+}
+
 export type Project = {
   slug: string
   title: string
@@ -43,6 +48,12 @@ export type Project = {
   outcome?: string
   reflection?: string
   teamMembers?: TeamMember[]
+  promptColor?: string
+  promptTextColor?: string
+  areaOfFocus?: string
+  challengeMetrics?: Metric[]
+  solutionMetrics?: Metric[]
+  resultMetrics?: Metric[]
 }
 
 export const projects: Project[] = [
@@ -54,8 +65,8 @@ export const projects: Project[] = [
     fullDescription:
       "Seelie is an innovative fintech platform addressing the challenges faced by Gen Z in managing their finances. In an era where traditional banking feels overwhelming, Seelie simplifies complex financial concepts through interactive tutorials, real-time budgeting tools, and gamified learning experiences.\n\nThe project was driven by extensive user research and iterative testing. We prioritized clarity, simplicity, and user engagement in our design process. With a modern aesthetic and personalized insights, Seelie aims to make financial literacy accessible and enjoyable, ultimately empowering young adults to take control of their financial future.",
     technologies: ["Figma", "FigJam", "Canva"],
-    imageUrl: "/placeholder.svg?height=600&width=800",
-    heroImage: "/placeholder.svg?height=1200&width=2000",
+    imageUrl: "/seelie-new.png",
+    heroImage: "/seelie-new.png",
     liveUrl: "https://www.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?node-id=20-9&p=f&t=d5H0H37oigekERrv-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=20%3A9",
     //githubUrl: "https://github.com/username/project-one",
     featured: true,
@@ -73,7 +84,7 @@ export const projects: Project[] = [
     solution:
       "Our solution was to build an interactive fintech app that transforms traditional banking into a user-friendly experience. Seelie breaks down financial jargon into digestible lessons, offers personalized budgeting tools, and integrates gamified elements to motivate users to build healthier financial habits. By combining education with practical tools, Seelie makes money management accessible and engaging.",
     solutionImage: "/Seelie_result.jpg",
-    figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?node-id=20-9",
+    figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?kind=proto&node-id=20-9&page-id=0%3A1&scaling=scale-down&starting-point-node-id=20%3A9&t=d5H0H37oigekERrv-0&type=design&hide-ui=1",
     prototypeImages: [
       {
         src: "/placeholder.svg?height=600&width=800",
@@ -120,8 +131,8 @@ export const projects: Project[] = [
     ],
     outcome:
       "Seelie received enthusiastic feedback from industry experts, with many intrigued by the unique features it held. The app was recognized for its innovative approach. With its interactive features and educational focus, Seelie has the potential to redefine how Gen Z approaches personal finance and targets financial literacy.",
-    reflection:
-      "Working on Seelie reinforced the value of user-centered design in fintech. The project taught me that simplifying complex financial information into engaging, interactive experiences is key to empowering users. Moving forward, I plan to explore additional personalization features and advanced data insights to further enhance the platform.",
+      reflection:
+      "Enhanced Interactivity & Advanced Insights\nExpand the prototype with detailed interactions (budget alerts, goal tracking) and integrate AI-driven recommendations for smarter financial planning.\n\nMobile-First Design\nOptimize the interface for mobile users, who make up the majority of our target audience.\n\nDark Mode\nAdd a dark mode feature to enhance usability and aesthetics for Gen Z users.\n\nUsability Testing\nConduct in-depth usability testing to refine the prototype and explore its full potential.",
     teamMembers: [
       {
         name: "Heral Kumar",
@@ -144,6 +155,24 @@ export const projects: Project[] = [
         //link: "https://example.com",
       },
     ],
+    promptColor: "#53b948",
+    promptTextColor: "#53b948",
+    areaOfFocus: "FinTech",
+    challengeMetrics: [
+      { number: "71%", label: "of Gen Z find traditional banking apps confusing" },
+      { number: "68%", label: "want financial education in their banking app" },
+      { number: "3.2x", label: "higher engagement with gamified financial tools" }
+    ],
+    solutionMetrics: [
+      { number: "92%", label: "user satisfaction in prototype testing" },
+      { number: "4.5x", label: "increase in financial knowledge retention" },
+      { number: "87%", label: "of users found budgeting tools intuitive" }
+    ],
+    resultMetrics: [
+      { number: "94%", label: "of test users would recommend the app" },
+      { number: "32%", label: "increase in daily financial planning activity" },
+      { number: "9.2/10", label: "average user experience rating" }
+    ]
   },
   {
     slug: "project-two",

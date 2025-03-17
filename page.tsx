@@ -380,8 +380,8 @@ export default function Portfolio() {
               >
                 Projects
             </h2>
-            <p className="text-muted-foreground mx-auto max-w-2xl mb-16">
-              Here's a collection of my recent work. Click on any project to view more details.
+            <p className="text-muted-foreground mx-auto max-w-2xl mb-16 pb-24">
+              Here's a collection of my recent work.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -389,19 +389,37 @@ export default function Portfolio() {
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}`}
-                  className="group block bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-700 transition-all duration-300"
+                  className="group relative block bg-card/50 border border-border rounded-xl overflow-hidden transition-all duration-300"
                 >
-                  <div className="aspect-video relative">
+                  <div 
+                    className="absolute -inset-3 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none z-0"
+                    style={{
+                      boxShadow: `0 0 40px 15px ${project.promptColor || '#f43f5e'}, 0 0 80px 20px ${project.promptColor || '#f43f5e'}`,
+                      filter: `blur(8px)`,
+                    }}
+                  />
+                  <div className="aspect-video relative z-10">
                     <Image src={project.imageUrl || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
                   </div>
-                  <div className="p-6">
-                    <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                      {project.title}
+                  <div className="p-6 relative z-10">
+                    <h2 className="text-xl font-semibold mb-2 text-foreground dark:text-foreground transition-colors duration-300"
+                      style={{
+                        color: 'inherit',
+                        transition: 'color 0.3s ease'
+                      }}
+                    >
+                      <span className="group-hover:text-transparent bg-clip-text bg-gradient-to-r transition-all duration-300"
+                        style={{
+                          backgroundImage: `linear-gradient(to right, ${project.promptColor || '#f43f5e'}, ${project.promptColor || '#f43f5e'})`,
+                        }}
+                      >
+                        {project.title}
+                      </span>
                     </h2>
-                    <p className="text-gray-400 mb-4">{project.description}</p>
+                    <p className="text-muted-foreground mb-4">{project.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech) => (
-                        <span key={tech} className="px-2 py-1 bg-gray-800 rounded-full text-xs">
+                        <span key={tech} className="px-4 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-xs font-medium text-gray-800 dark:text-gray-200">
                           {tech}
                         </span>
                       ))}
