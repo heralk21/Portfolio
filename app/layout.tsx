@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import type React from "react";
+import SiteLayout from "./components/layout/site-layout";
 import Script from "next/script";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Heral Kumar",
-  description: "Heral Kumar's Portfolio",
-  icons: {
-    icon: "/website logo heral.png",  
-  }
+  description: "Portfolio website showcasing my work and experience",
 };
 
 export const viewport = {
@@ -47,9 +47,14 @@ export default function RootLayout({
         </Script>
         {/* If you still need a custom mobile zoom, consider configuring it here or via CSS. */}
       </head>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {children}
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SiteLayout>{children}</SiteLayout>
         </ThemeProvider>
       </body>
     </html>

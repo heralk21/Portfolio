@@ -1,19 +1,65 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ExternalLink, Github, ChevronRight } from "lucide-react"
-import { getProjectBySlug, getAllProjectSlugs } from "@/lib/projects"
+import { getProjectBySlug } from "@/lib/projects"
+import type { Project } from "../../../lib/types"
 
-export function generateStaticParams() {
-  const slugs = getAllProjectSlugs()
-  return slugs.map((slug) => ({ slug }))
+interface PrototypeImage {
+  src: string
+  alt: string
+}
+
+interface DesignProcessStep {
+  title: string
+  description: string
+  image?: string
+}
+
+interface TeamMember {
+  name: string
+  role: string
+  link?: string
 }
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug)
+  const [project, setProject] = useState<Project | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      const projectData = await getProjectBySlug(params.slug)
+      if (!projectData) {
+        notFound()
+      }
+      setProject(projectData as Project)
+      setLoading(false)
+    }
+
+    fetchProject()
+  }, [params.slug])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#020817] text-white flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    )
+  }
 
   if (!project) {
     notFound()
+  }
+
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault()
+    const element = document.getElementById(targetId)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
   }
 
   return (
@@ -46,7 +92,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <section id="introduction" className="mb-20">
               <h2 className="text-3xl font-bold mb-6">Introduction</h2>
               <div className="prose prose-lg prose-invert max-w-none">
-                {project.introduction?.split("\n\n").map((paragraph, idx) => (
+                {project.introduction?.split("\n\n").map((paragraph: string, idx: number) => (
                   <p key={idx}>{paragraph}</p>
                 ))}
               </div>
@@ -70,7 +116,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                 </div>
               </div>
               <div className="prose prose-lg prose-invert max-w-none">
-                {project.overview?.split("\n\n").map((paragraph, idx) => (
+                {project.overview?.split("\n\n").map((paragraph: string, idx: number) => (
                   <p key={idx}>{paragraph}</p>
                 ))}
               </div>
@@ -90,7 +136,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <section id="solution" className="mb-20">
               <h2 className="text-3xl font-bold mb-6">Solution</h2>
               <div className="prose prose-lg prose-invert max-w-none mb-8">
-                {project.solution?.split("\n\n").map((paragraph, idx) => (
+                {project.solution?.split("\n\n").map((paragraph: string, idx: number) => (
                   <p key={idx}>{paragraph}</p>
                 ))}
               </div>
@@ -118,10 +164,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               <div className="w-full aspect-[16/9] bg-black rounded-xl overflow-hidden mb-8">
                 <iframe
                   className="w-full h-full"
-                  src={
-                    project.figmaEmbed ||
-                    "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/example"
-                  }
+                  src={project.figmaEmbed || "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/example"}
                   allowFullScreen
                 />
               </div>
@@ -129,7 +172,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               {/* Prototype Screenshots */}
               {project.prototypeImages && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-                  {project.prototypeImages.map((image, index) => (
+                  {project.prototypeImages.map((image: PrototypeImage, index: number) => (
                     <div key={index} className="rounded-xl overflow-hidden">
                       <Image
                         src={image.src || "/placeholder.svg"}
@@ -148,11 +191,11 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             <section id="design-process" className="mb-20">
               <h2 className="text-3xl font-bold mb-6">Design Process</h2>
               <div className="space-y-16">
-                {project.designProcess?.map((step, index) => (
+                {project.designProcess?.map((step: DesignProcessStep, index: number) => (
                   <div key={index} className="space-y-6">
                     <h3 className="text-2xl font-semibold">{step.title}</h3>
                     <div className="prose prose-lg prose-invert max-w-none">
-                      {step.description.split("\n\n").map((paragraph, idx) => (
+                      {step.description.split("\n\n").map((paragraph: string, idx: number) => (
                         <p key={idx}>{paragraph}</p>
                       ))}
                     </div>
@@ -177,7 +220,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               <section id="outcome" className="mb-20">
                 <h2 className="text-3xl font-bold mb-6">Outcome</h2>
                 <div className="prose prose-lg prose-invert max-w-none">
-                  {project.outcome.split("\n\n").map((paragraph, idx) => (
+                  {project.outcome.split("\n\n").map((paragraph: string, idx: number) => (
                     <p key={idx}>{paragraph}</p>
                   ))}
                 </div>
@@ -189,7 +232,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               <section id="reflection" className="mb-20">
                 <h2 className="text-3xl font-bold mb-6">Reflection</h2>
                 <div className="prose prose-lg prose-invert max-w-none">
-                  {project.reflection.split("\n\n").map((paragraph, idx) => (
+                  {project.reflection.split("\n\n").map((paragraph: string, idx: number) => (
                     <p key={idx}>{paragraph}</p>
                   ))}
                 </div>
@@ -201,7 +244,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               <section id="team" className="mb-20">
                 <h2 className="text-3xl font-bold mb-6">Team Shoutout</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {project.teamMembers.map((member, index) => (
+                  {project.teamMembers.map((member: TeamMember, index: number) => (
                     <div key={index} className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
                       <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
                       <p className="text-gray-400 mb-4">{member.role}</p>
@@ -239,38 +282,74 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               <div className="bg-gray-900/30 border border-gray-800 rounded-xl p-6">
                 <h3 className="text-lg font-semibold mb-4">On This Page</h3>
                 <nav className="space-y-2">
-                  <a href="#introduction" className="block text-gray-300 hover:text-white py-1">
+                  <a 
+                    href="#introduction" 
+                    onClick={(e) => handleSmoothScroll(e, "introduction")}
+                    className="block text-gray-300 hover:text-white py-1"
+                  >
                     Introduction
                   </a>
-                  <a href="#overview" className="block text-gray-300 hover:text-white py-1">
+                  <a 
+                    href="#overview" 
+                    onClick={(e) => handleSmoothScroll(e, "overview")}
+                    className="block text-gray-300 hover:text-white py-1"
+                  >
                     Overview
                   </a>
                   {project.problemStatement && (
-                    <a href="#problem" className="block text-gray-300 hover:text-white py-1">
+                    <a 
+                      href="#problem" 
+                      onClick={(e) => handleSmoothScroll(e, "problem")}
+                      className="block text-gray-300 hover:text-white py-1"
+                    >
                       Problem Statement
                     </a>
                   )}
-                  <a href="#solution" className="block text-gray-300 hover:text-white py-1">
+                  <a 
+                    href="#solution" 
+                    onClick={(e) => handleSmoothScroll(e, "solution")}
+                    className="block text-gray-300 hover:text-white py-1"
+                  >
                     Solution
                   </a>
-                  <a href="#prototype" className="block text-gray-300 hover:text-white py-1">
+                  <a 
+                    href="#prototype" 
+                    onClick={(e) => handleSmoothScroll(e, "prototype")}
+                    className="block text-gray-300 hover:text-white py-1"
+                  >
                     Prototype
                   </a>
-                  <a href="#design-process" className="block text-gray-300 hover:text-white py-1">
+                  <a 
+                    href="#design-process" 
+                    onClick={(e) => handleSmoothScroll(e, "design-process")}
+                    className="block text-gray-300 hover:text-white py-1"
+                  >
                     Design Process
                   </a>
                   {project.outcome && (
-                    <a href="#outcome" className="block text-gray-300 hover:text-white py-1">
+                    <a 
+                      href="#outcome" 
+                      onClick={(e) => handleSmoothScroll(e, "outcome")}
+                      className="block text-gray-300 hover:text-white py-1"
+                    >
                       Outcome
                     </a>
                   )}
                   {project.reflection && (
-                    <a href="#reflection" className="block text-gray-300 hover:text-white py-1">
+                    <a 
+                      href="#reflection" 
+                      onClick={(e) => handleSmoothScroll(e, "reflection")}
+                      className="block text-gray-300 hover:text-white py-1"
+                    >
                       Reflection
                     </a>
                   )}
                   {project.teamMembers && project.teamMembers.length > 0 && (
-                    <a href="#team" className="block text-gray-300 hover:text-white py-1">
+                    <a 
+                      href="#team" 
+                      onClick={(e) => handleSmoothScroll(e, "team")}
+                      className="block text-gray-300 hover:text-white py-1"
+                    >
                       Team Shoutout
                     </a>
                   )}
@@ -280,7 +359,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               <div className="mt-6 bg-gray-900/30 border border-gray-800 rounded-xl p-6">
                 <h3 className="text-lg font-semibold mb-4">Technologies</h3>
                 <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
+                  {project.technologies.map((tech: string) => (
                     <span key={tech} className="px-3 py-1 bg-gray-800 rounded-full text-sm">
                       {tech}
                     </span>

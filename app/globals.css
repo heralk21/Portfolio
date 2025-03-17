@@ -74,13 +74,13 @@ body {
 }
 
 /* Custom cursor styles */
-/* * {
+* {
   cursor: none;
-} */
+} 
 
 .custom-cursor {
-  width: 9px;
-  height: 9px;
+  width: 11px;
+  height: 11px;
   background: rgba(20, 184, 166, 0.5);
   border-radius: 50%;
   position: fixed;

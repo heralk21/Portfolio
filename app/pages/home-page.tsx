@@ -170,8 +170,8 @@ export default function HomePage() {
                 onClick={() => handleNavigation(item)}
                 className={`block w-full text-left px-4 py-2 text-sm font-medium 
                   ${activeSection === item.path 
-                    ? "text-primary bg-muted" 
-                    : "text-muted-foreground hover:bg-muted"}`}
+                    ? "text-primary bg-transparent" 
+                    : "text-muted-foreground hover:bg-transparent"}`}
               >
                 {item.label}
               </button>

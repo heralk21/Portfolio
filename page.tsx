@@ -92,7 +92,7 @@ export default function Portfolio() {
         if (isScrolling) return;
 
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
             const section = menuItems.find(
               (item) => item.ref.current === entry.target
             );
@@ -105,7 +105,7 @@ export default function Portfolio() {
       },
       {
         rootMargin: "-10% 0px",
-        threshold: [0.5],
+        threshold: [0.1, 0.5],
       }
     );
 
@@ -174,8 +174,8 @@ export default function Portfolio() {
                 onClick={() => handleNavigation(item)}
                 className={`block w-full text-left px-4 py-2 text-sm font-medium 
                   ${activeSection === item.path 
-                    ? "text-primary bg-muted" 
-                    : "text-muted-foreground hover:bg-muted"}`}
+                    ? "text-primary bg-transparent" 
+                    : "text-muted-foreground hover:bg-transparent"}`}
               >
                 {item.label}
               </button>
@@ -264,99 +264,100 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section ref={experienceRef} className="py-24 lg:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="space-y-2 text-center"
-          >
-            <h2
-              className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.fontFamily = "Arial, sans-serif")
-              }
+        <div ref={experienceRef} className="min-h-screen">
+          <section className="py-24 lg:py-32">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="space-y-2 text-center"
             >
-              Experience
-            </h2>
-            <p className="text-muted-foreground">
-              A timeline of my professional journey.
-            </p>
-          </motion.div>
-          <Timeline
-            data={[
-              {
-                year: "Jan 2025 - Present",
-                title: "Web Designer & Developer",
-                company: "UBC iGem (International Genetically Engineered Machine Foundation)",
-                content: (
-                  <p>
-                    Designing and developing the 2025 UBC iGEM wiki website, 
-                    integrating a Mars-themed UI to communicate cyanobacteria research. 
-                    Revamping the UBC iGEM website, enhancing accessibility and UX with Figma, 
-                    wireframing, prototyping, and coding. Creating storytelling visuals for 
-                    educational outreach, including children's storybooks simplifying 
-                    synthetic biology concepts.
-                  </p>
-                ),
-                image1: "/ubcigem1.png",
-                image2: "/ubcigem2.png",
-              },
-              {
-                year: "Apr 2024 - Present",
-                title: "Senior Orientation Leader",
-                company: "University of British Columbia",
-                content: (
-                  <p>
-                    Leading and mentoring a team of 10+ orientation leaders,
-                    ensuring the success of 5+ major university events.
-                    Organized a Transfer Student Social Meet with 100+
-                    attendees, achieving a 93% positive feedback rate. Enhanced
-                    team collaboration and inclusivity, driving a 19% increase
-                    in event participation compared to previous years.
-                  </p>
-                ),
-                image1: "/SeniorOL1.jpg",
-                image2: "/SeniorOL2.jpg",
-              },
-              {
-                year: "Sept 2024 - Dec 2024",
-                title: "Coding and Robotics Tutor",
-                company: "Wize Computing Academy",
-                content: (
-                  <p>
-                    Taught 10+ students aged 10–12 using Python and LEGO
-                    Education SPIKE Prime kits for hands-on coding and robotics
-                    projects. Sent regular individual progress reports to
-                    parents, fostering transparency and tracking improvements.
-                    Cultivated problem-solving and critical-thinking skills,
-                    enhancing students' confidence in technology and coding.
-                  </p>
-                ),
-                image1: "/Wize_Academy3.jpg",
-                image2: "/Wize_Academy2.jpg",
-              },
-              {
-                year: "Jun 2023 - Apr 2024",
-                title: "Orientation Leader",
-                company: "University of British Columbia",
-                content: (
-                  <p>
-                    Led orientation groups of 15+ high school students,
-                    fostering a welcoming and inclusive community. Organized
-                    engaging activities that boosted student satisfaction by
-                    57%. Collaborated with peers and staff to deliver seamless
-                    events, strengthening communication and teamwork skills.
-                  </p>
-                ),
-                image1: "/OL1.jpg",
-                image2: "/OL2.jpg",
-              },
-            ]}
-          />
-        </section>
+              <h2
+                className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.fontFamily = "Arial, sans-serif")
+                }
+              >
+                Experience
+              </h2>
+              <p className="text-muted-foreground">
+                A timeline of my professional journey.
+              </p>
+            </motion.div>
+            <Timeline
+              data={[
+                {
+                  year: "Jan 2025 - Present",
+                  title: "Web Designer & Developer",
+                  company: "UBC iGem (International Genetically Engineered Machine Foundation)",
+                  content: (
+                    <p>
+                      Designing and developing the 2025 UBC iGEM wiki website, 
+                      integrating a Mars-themed UI to communicate cyanobacteria research. 
+                      Revamping the UBC iGEM website, enhancing accessibility and UX with Figma, 
+                      wireframing, prototyping, and coding. Creating storytelling visuals for 
+                      educational outreach, including children's storybooks simplifying 
+                      synthetic biology concepts.
+                    </p>
+                  ),
+                  image1: "/ubcigem1.png",
+                  image2: "/ubcigem2.png",
+                },
+                {
+                  year: "Apr 2024 - Present",
+                  title: "Senior Orientation Leader",
+                  company: "University of British Columbia",
+                  content: (
+                    <p>
+                      Leading and mentoring a team of 10+ orientation leaders,
+                      ensuring the success of 5+ major university events.
+                      Organized a Transfer Student Social Meet with 100+
+                      attendees, achieving a 93% positive feedback rate. Enhanced
+                      team collaboration and inclusivity, driving a 19% increase
+                      in event participation compared to previous years.
+                    </p>
+                  ),
+                  image1: "/SeniorOL1.jpg",
+                  image2: "/SeniorOL2.jpg",
+                },
+                {
+                  year: "Sept 2024 - Dec 2024",
+                  title: "Coding and Robotics Tutor",
+                  company: "Wize Computing Academy",
+                  content: (
+                    <p>
+                      Taught 10+ students aged 10–12 using Python and LEGO
+                      Education SPIKE Prime kits for hands-on coding and robotics
+                      projects. Sent regular individual progress reports to
+                      parents, fostering transparency and tracking improvements.
+                      Cultivated problem-solving and critical-thinking skills,
+                      enhancing students' confidence in technology and coding.
+                    </p>
+                  ),
+                  image1: "/Wize_Academy3.jpg",
+                  image2: "/Wize_Academy2.jpg",
+                },
+                {
+                  year: "Jun 2023 - Apr 2024",
+                  title: "Orientation Leader",
+                  company: "University of British Columbia",
+                  content: (
+                    <p>
+                      Led orientation groups of 15+ high school students,
+                      fostering a welcoming and inclusive community. Organized
+                      engaging activities that boosted student satisfaction by
+                      57%. Collaborated with peers and staff to deliver seamless
+                      events, strengthening communication and teamwork skills.
+                    </p>
+                  ),
+                  image1: "/OL1.jpg",
+                  image2: "/OL2.jpg",
+                },
+              ]}
+            />
+          </section>
+        </div>
 
         <section ref={SkillsRef}>
           {" "}
@@ -371,37 +372,45 @@ export default function Portfolio() {
             transition={{ duration: 0.5 }}
             className="space-y-2 text-center"
           >
-            <p className="text-gray-300 mb-12 max-w-2xl">
+            <h2
+                className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl mb-4"
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.fontFamily = "Arial, sans-serif")
+                }
+              >
+                Projects
+            </h2>
+            <p className="text-muted-foreground mx-auto max-w-2xl mb-16">
               Here's a collection of my recent work. Click on any project to view more details.
             </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <Link
-                key={project.slug}
-                href={`/projects/${project.slug}`}
-                className="group block bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-700 transition-all duration-300"
-              >
-                <div className="aspect-video relative">
-                  <Image src={project.imageUrl || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
-                </div>
-                <div className="p-6">
-                  <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                    {project.title}
-                  </h2>
-                  <p className="text-gray-400 mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <span key={tech} className="px-2 py-1 bg-gray-800 rounded-full text-xs">
-                        {tech}
-                      </span>
-                    ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {projects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className="group block bg-gray-900/50 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-700 transition-all duration-300"
+                >
+                  <div className="aspect-video relative">
+                    <Image src={project.imageUrl || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </motion.div>
+                  <div className="p-6">
+                    <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h2>
+                    <p className="text-gray-400 mb-4">{project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech) => (
+                        <span key={tech} className="px-2 py-1 bg-gray-800 rounded-full text-xs">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </motion.div>
         </section>
 
         <section ref={contactRef} className="relative py-24 lg:py-32">
