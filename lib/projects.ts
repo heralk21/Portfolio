@@ -107,7 +107,7 @@ export const projects: Project[] = [
       {
         title: "Discover",
         description:
-          "We began by interviewing Gen Z users to understand their financial habits and the challenges they face with traditional banking platforms. Our research revealed that confusing financial terminology and outdated interfaces were major barriers to effective money management",
+          "User Research – Interviews with Gen Z users revealed that confusing financial terms and outdated banking interfaces hinder money management\n\nCompetitive Analysis – Existing finance apps lack personalization and overwhelm users with complex interfaces instead of guiding them \n\nFeature Definition – We focused on AI-driven assistance, intuitive UI, and simplified banking education to make finance easier for Gen Z",
         image: "/placeholder.svg?height=800&width=1200",
       },
       {
@@ -120,7 +120,7 @@ export const projects: Project[] = [
         title: "Develop",
         description:
           "Our team brainstormed ideas and created low-fidelity wireframes to map out the core user flow. Through iterative usability tests and feedback sessions, we refined our concepts, ultimately developing a high-fidelity prototype that balanced functionality with a clean, modern design.",
-        image: "/placeholder.svg?height=800&width=1200",
+        image: "/seelie-wireframes.png",
       },
       {
         title: "Deliver",
@@ -137,7 +137,7 @@ export const projects: Project[] = [
       {
         name: "Heral Kumar",
         role: "UI/UX Designer",
-        link: "https://heralkumar.com",
+        link: "https://www.linkedin.com/in/heral-kumar/",
       },
       {
         name: "Ruhani Mittal",

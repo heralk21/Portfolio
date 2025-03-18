@@ -221,6 +221,298 @@ const FadeInSection = ({ children, className = "" }: {
   );
 };
 
+// Create a component for highlighted text
+const HighlightedText = ({ children, color = "#53b948" }: {
+  children: React.ReactNode,
+  color?: string
+}) => {
+  return (
+    <span 
+      className="relative inline-block font-semibold highlight-animation"
+      style={{ color }}
+    >
+      <style jsx>{`
+        .highlight-animation {
+          position: relative;
+        }
+        .highlight-animation::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 30%;
+          background-color: ${color};
+          opacity: 0.15;
+          z-index: -1;
+          transform-origin: bottom;
+          animation: pulse 3s infinite alternate;
+        }
+        @keyframes pulse {
+          0% {
+            opacity: 0.1;
+            transform: scaleY(0.8);
+          }
+          100% {
+            opacity: 0.2;
+            transform: scaleY(1);
+          }
+        }
+      `}</style>
+      {children}
+    </span>
+  );
+};
+
+// Create a component for user personas
+const UserPersonaCard = ({ 
+  name, 
+  subtitle, 
+  age, 
+  location, 
+  occupation, 
+  painPoints, 
+  goals,
+  imageUrl = "/placeholder.svg", 
+  color = "#53b948" 
+}: { 
+  name: string,
+  subtitle: string,
+  age: string | number,
+  location: string,
+  occupation: string,
+  painPoints: string[],
+  goals: string[],
+  imageUrl?: string,
+  color?: string
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="p-6 rounded-lg border bg-card/30 backdrop-blur-sm relative overflow-hidden"
+      style={{ 
+        background: `linear-gradient(to right, rgba(${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}, 0.05), rgba(${parseInt(color.slice(1, 3), 16)}, ${parseInt(color.slice(3, 5), 16)}, ${parseInt(color.slice(5, 7), 16)}, 0.02))` 
+      }}
+    >
+      <div className="flex flex-col gap-6">
+        {/* Header with image and name */}
+        <div className="flex items-center gap-4">
+          <div className="w-24 h-24 rounded-full overflow-hidden relative">
+            <Image
+              src={imageUrl}
+              alt={name}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <h3 className="text-2xl font-bold">{name}</h3>
+        </div>
+        
+        {/* Details */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3">
+          <div>
+            <p className="font-semibold">Age</p>
+            <p className="text-muted-foreground">{age}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Location</p>
+            <p className="text-muted-foreground">{location}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Occupation</p>
+            <p className="text-muted-foreground">{occupation}</p>
+          </div>
+          <div>
+            <p className="font-semibold">Context</p>
+            <p className="text-muted-foreground">{subtitle}</p>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
+          <div>
+            <h4 className="font-semibold text-lg mb-3">Pain Points:</h4>
+            <ul className="space-y-2">
+              {painPoints.map((point, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="text-red-500 flex-shrink-0 text-lg">•</span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="font-semibold text-lg mb-3">Goals:</h4>
+            <ul className="space-y-2">
+              {goals.map((goal, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="text-green-500 flex-shrink-0 text-lg">•</span>
+                  <span>{goal}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Create a component for numbered design process steps
+const NumberedProcessPoint = ({ number, description, color = "#53b948" }: { 
+  number: number,
+  description: string,
+  color?: string
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
+  // Format the number to have leading zero if needed
+  const formattedNumber = number < 10 ? `0${number}` : `${number}`;
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="mb-12 last:mb-6"
+    >
+      <div className="relative">
+        <span 
+          className="text-[90px] font-bold absolute -top-10 -left-2 opacity-20 select-none"
+          style={{ color }}
+        >
+          {formattedNumber}
+        </span>
+        <div className="relative z-10 pl-20 ml-9">
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
+            {description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Create a component for autoplay looping video with fade-in animation
+const FadeInVideo = ({ src, className = "" }: { 
+  src: string,
+  className?: string
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className={`relative overflow-hidden rounded-xl border ${className}`}
+    >
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="w-full h-auto"
+      >
+        <source src={src} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </motion.div>
+  );
+};
+
+// Create a component for competitive analysis table
+const CompetitiveAnalysisTable = ({ promptColor = "#53b948" }: { promptColor?: string }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
+  // Define competitors and features for comparison
+  const competitors = [
+    { name: "Seelie", logo: "/competitive-analysis/seelie-logo.png" },
+    { name: "Mint", logo: "/competitive-analysis/mint-competitive-analy-seelie.jpg" },
+    { name: "YNAB", logo: "/competitive-analysis/ynab-competitive-analy-seelie.png" },
+    { name: "PocketGuard", logo: "/competitive-analysis/pocketguard-competitive-analy-seelie.jpg" },
+  ];
+  
+  const features = [
+    { id: 1, name: "AI-Driven Finance Assistance", scores: [1, 0, 0, 0] },
+    { id: 2, name: "Bill Payment Reminders", scores: [1, 1, 0, 1] },
+    { id: 3, name: "Personalized Budgeting", scores: [1, 1, 1, 1] },
+    { id: 4, name: "Banking Education", scores: [1, 0, 0, 0] },
+    { id: 5, name: "Subscription Tracking", scores: [1, 0, 0, 1] },
+    { id: 6, name: "Smart Spending Insights", scores: [1, 1, 1, 1] },
+  ];
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="overflow-x-auto"
+    >
+      <table className="w-full border-collapse border">
+        <thead>
+          <tr className="bg-muted/30">
+            <th className="p-3 text-center font-medium border-b border-r">#</th>
+            <th className="p-3 text-left font-medium border-b border-r min-w-[200px]">Features</th>
+            {competitors.map((competitor, index) => (
+              <th key={index} className="p-3 text-center font-medium border-b border-r">
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <div className="w-10 h-10 relative">
+                    <Image 
+                      src={competitor.logo} 
+                      alt={competitor.name} 
+                      width={40} 
+                      height={40} 
+                      className="object-contain"
+                    />
+                  </div>
+                  <span className="text-sm">{competitor.name}</span>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {features.map((feature) => (
+            <tr key={feature.id} className="even:bg-muted/5">
+              <td className="p-3 border-b border-r text-center">{feature.id}</td>
+              <td className="p-3 border-b border-r">{feature.name}</td>
+              {feature.scores.map((score, index) => (
+                <td key={index} className="p-3 border-b border-r text-center">
+                  {score === 1 ? (
+                    <div className="inline-flex items-center justify-center">
+                      <span 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: promptColor }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="inline-flex items-center justify-center">
+                      <span className="w-4 h-4 rounded-full border border-gray-300" />
+                    </div>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </motion.div>
+  );
+};
+
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
@@ -338,7 +630,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               </button>
             ))}
             <ThemeToggle />
-          </div>
+            </div>
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -358,8 +650,8 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             ))}
             <div className="px-4 py-2">
               <ThemeToggle />
-            </div>
-          </div>
+        </div>
+      </div>
         )}
       </header>
 
@@ -387,10 +679,10 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                 />
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-                  <div>
+                <div>
                     <h3 className="font-medium mb-1">Timeline</h3>
                     <p className="text-muted-foreground">{project.timeline || "4 weeks"}</p>
-              </div>
+                </div>
                 <div>
                     <h3 className="font-medium mb-1">Role</h3>
                     <p className="text-muted-foreground">{project.role || "UI/UX Designer"}</p>
@@ -425,8 +717,8 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                         </a>
                       )}
                 </div> */}
-              {/* </div> */}
-                </div>
+                {/* </div> */}
+              </div>
               </section>
 
               {/* Challenge Section */}
@@ -517,53 +809,213 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                   >
                     <p className="text-lg leading-relaxed">{project.problemStatement}</p>
                   </div>
-                </div>
+              </div>
             </section>
 
-              {/* Research Section */}
-              <section id="research" className="space-y-8 mb-16">
+              {/* Research Section - removing this entire section */}
+              {/* <section id="research" className="space-y-8 mb-16">
                 <h2 className="text-2xl font-bold">Research</h2>
-                {project.slug === "Seelie" ? (
-                  <SeelieResearchCharts promptColor={project.promptColor || "#53b948"} />
-                ) : (
-                  <div className="grid md:grid-cols-2 gap-8">
-                    {project.researchImages?.map((image, index) => (
+                
+                {project.slug === "Seelie" && (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                       <FadeInImage
-                        key={index}
-                        src={image}
-                        alt={`Research ${index + 1}`}
+                        src="/Seelie_research1.jpg"
+                        alt="Seelie Research"
                         fill
                         className="aspect-video relative rounded-lg overflow-hidden border"
                       />
-                  ))}
+                      <FadeInImage
+                        src="/Seelie_research2.jpg"
+                        alt="Seelie Research"
+                        fill
+                        className="aspect-video relative rounded-lg overflow-hidden border"
+                      />
                 </div>
-              )}
-            </section>
+                    
+                    <h3 className="text-xl font-semibold mt-8 mb-4">Competitive Analysis</h3>
+                    <CompetitiveAnalysisTable promptColor={project.promptColor} />
+                  </>
+                )}
+                
+              </section> */}
 
               {/* Process Section */}
               <section id="process" className="space-y-8 mb-16">
                 <h2 className="text-2xl font-bold">Design Process</h2>
+                {project.slug === "Seelie" ? (
+                  <div className="space-y-16">
+                    {project.designProcess?.map((step: DesignProcessStep, index: number) => (
+                      <div key={index} className="space-y-6">
+                        <h3 className="text-2xl font-semibold">{step.title}</h3>
+                        {step.title === "Discover" ? (
+                          <div className="mt-8">
+                            {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                              <NumberedProcessPoint
+                                key={idx}
+                                number={idx + 1}
+                                description={paragraph}
+                                color={project.promptColor}
+                              />
+                ))}
+              </div>
+                        ) : step.title === "Define" ? (
+                          <>
+                          <h2 className="text-xl font-semibold mt-8 mb-4">User Research</h2>
+                              {project.slug === "Seelie" ? (
+                                <SeelieResearchCharts promptColor={project.promptColor || "#53b948"} />
+                              ) : (
+                                <div className="grid md:grid-cols-2 gap-8">
+                                  {project.researchImages?.map((image, index) => (
+                                    <FadeInImage
+                                      key={index}
+                                      src={image}
+                                      alt={`Research ${index + 1}`}
+                                      fill
+                                      className="aspect-video relative rounded-lg overflow-hidden border"
+                                    />
+                                ))}
+                </div>
+              )}
+                            <div className="prose prose-lg prose-invert max-w-none">
+                              {/* Example of using HighlightedText in a static paragraph */}
+                              <p>
+                                Our research revealed key insights about our target audience. We identified that {' '} 
+                                <HighlightedText color={project.promptColor}> financial literacy </HighlightedText> {' '}
+                                and {' '}
+                                <HighlightedText color={project.promptColor}> budget management </HighlightedText> {' '}
+                                are critical pain points for Gen Z users.
+                              </p>
+                              
+                              {/* Regular paragraphs from the project data */}
+                              {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                <p key={idx}>{paragraph}</p>
+                              ))}
+              </div>
+
+                            <h3 className="text-xl font-semibold mt-8 mb-4">User Personas</h3>
+                            <div className="space-y-8 mt-6">
+                              <UserPersonaCard
+                                name="Maya Tanaka"
+                                subtitle="International Student"
+                                age={20}
+                                location="Toronto, Canada (originally from Japan)"
+                                occupation="Business Administration Student"
+                                painPoints={[
+                                  "Struggles with understanding the Canadian banking system (credit scores, loans, budgeting).",
+                                  "Feels overwhelmed managing multiple expenses (tuition, rent, groceries).",
+                                  "Prefers digital solutions over traditional banking but finds it hard to trust finance apps.",
+                                  "Wants reminders for bills & subscription renewals to avoid unexpected charges."
+                                ]}
+                                goals={[
+                                  "Learn and navigate Canadian banking easily.",
+                                  "Have a personalized assistant to help with finance-related questions.",
+                                  "Track expenses, savings, and avoid overdraft fees."
+                                ]}
+                                imageUrl="/user personas - seelie/seelie-person1.jpg"
+                                color={project.promptColor}
+                              />
+                              
+                              <UserPersonaCard
+                                name="Jordan Smith"
+                                subtitle="Forgetful Freelancer"
+                                age={22}
+                                location="Vancouver, Canada"
+                                occupation="Part-time content creator, freelance graphic designer"
+                                painPoints={[
+                                  "Juggles multiple gigs and irregular income but forgets to save money.",
+                                  "Loses track of subscription payments (Spotify, Adobe, gym, Netflix, etc.).",
+                                  "Has mild ADHD, making task management difficult.",
+                                  "Finds traditional banking apps too complicated and boring."
+                                ]}
+                                goals={[
+                                  "Use Seelie as a \"gentle assistant\" to remind him about financial goals.",
+                                  "Get smart, friendly spending insights without overwhelming data.",
+                                  "Set non-intrusive reminders for upcoming payments."
+                                ]}
+                                imageUrl="/user personas - seelie/seelie-person2.jpg"
+                                color={project.promptColor}
+                />
+              </div>
+
+                            {/* Add Competitive Analysis Table here, right after User Personas */}
+                            <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
+                            <CompetitiveAnalysisTable promptColor={project.promptColor} />
+
+                            {step.image && (
+                              <FadeInImage
+                                src={step.image || "/placeholder.svg"}
+                                alt={step.title}
+                                width={1200}
+                                height={800}
+                                className="rounded-xl overflow-hidden my-6"
+                              />
+                            )}
+                          </>
+                        ) : step.title === "Deliver" ? (
+                          <>
+                            <div className="prose prose-lg prose-invert max-w-none">
+                              {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                <p key={idx}>{paragraph}</p>
+                              ))}
+                            </div>
+                            
+                            {/* Replace image with looping video */}
+                            <FadeInVideo 
+                              src="/seelie-video.mp4" 
+                              className="my-6 aspect-video"
+                            />
+                            <p 
+                              className="text-center text-lg mt-4 font-medium"
+                              style={{ color: project.promptColor || "#53b948" }}
+                            >
+                              Check out this video, highlighting my favourite and most GenZ feature of Seelie!
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <div className="prose prose-lg prose-invert max-w-none">
+                              {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                <p key={idx}>{paragraph}</p>
+                  ))}
+                </div>
+                            {step.image && (
+                              <FadeInImage
+                                src={step.image || "/placeholder.svg"}
+                                alt={step.title}
+                                width={1200}
+                                height={800}
+                                className="rounded-xl overflow-hidden my-6"
+                              />
+                            )}
+                          </>
+                        )}
+                    </div>
+                  ))}
+                </div>
+                ) : (
               <div className="space-y-16">
-                  {project.designProcess?.map((step: DesignProcessStep, index: number) => (
+                    {project.designProcess?.map((step: DesignProcessStep, index: number) => (
                   <div key={index} className="space-y-6">
                     <h3 className="text-2xl font-semibold">{step.title}</h3>
                     <div className="prose prose-lg prose-invert max-w-none">
-                        {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                          {step.description.split("\n\n").map((paragraph: string, idx: number) => (
                         <p key={idx}>{paragraph}</p>
                       ))}
                     </div>
                     {step.image && (
-                        <FadeInImage
+                          <FadeInImage
                           src={step.image || "/placeholder.svg"}
                           alt={step.title}
                           width={1200}
                           height={800}
-                          className="rounded-xl overflow-hidden my-6"
+                            className="rounded-xl overflow-hidden my-6"
                         />
                     )}
                   </div>
                 ))}
               </div>
+                )}
             </section>
 
               {/* Solution Section */}
@@ -615,7 +1067,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                         group-hover:fill-yellow-300 
                         group-hover:drop-shadow-[0_0_8px_#fef08a]"
                     />
-                  </div>
+                </div>
                   <div 
                     className="prose prose-lg dark:prose-invert max-w-none"
                   >
@@ -737,8 +1189,8 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                         </div>
                       );
                     })}
-                  </div>
-                </section>
+                </div>
+              </section>
             )}
 
               {/* Team Section */}
@@ -823,22 +1275,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                       }}
                     >
                       Challenge
-                    </a>
-                    <a 
-                      href="#research" 
-                      onClick={(e) => handleSmoothScroll(e, "research")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "research" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "research" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                      Research
                     </a>
                     <a 
                       href="#process" 
