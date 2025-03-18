@@ -12,6 +12,12 @@ import { ThemeToggle } from "../../components/shared/theme-switcher"
 import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
 
+// Dynamically import the UnderwaySign component
+const UnderwaySign = dynamic(
+  () => import('../../components/shared/underway-sign'),
+  { ssr: false }
+)
+
 // Dynamically import the charts components to avoid SSR issues with Recharts
 const SeelieResearchCharts = dynamic(
   () => import('../../components/charts/SeelieResearchCharts'),
@@ -36,6 +42,11 @@ const HeartRiskPersonas = dynamic(
 
 const RecoverEasePersonas = dynamic(
   () => import('../../components/personas/RecoverEasePersonas'),
+  { ssr: false }
+)
+
+const MeloPersonas = dynamic(
+  () => import('../../components/personas/MeloPersonas'),
   { ssr: false }
 )
 
@@ -81,7 +92,7 @@ const getProjectSections = (projectSlug: string) => {
   const defaultSections = [
     { id: "overview", label: "Overview" },
     { id: "challenge", label: "Challenge" },
-    { id: "process", label: "Process" },
+    { id: "process", label: "Design Process" },
     { id: "solution", label: "Solution" },
     { id: "results", label: "Results" },
     { id: "reflection", label: "Reflection" },
@@ -916,222 +927,153 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               {/* Process Section */}
               <section id="process" className="space-y-8 mb-16">
                 <h2 className="text-2xl font-bold">Design Process</h2>
-                {project.slug === "Seelie" ? (
+                {project.slug === "Seelie" || project.slug === "Melo" ? (
                   <div className="space-y-16">
                     {project.designProcess?.map((step: DesignProcessStep, index: number) => (
                       <div key={index} className="space-y-6">
                         <h3 className="text-2xl font-semibold">{step.title}</h3>
                         {step.title === "Discover" ? (
                           <div className="mt-8">
-                            {step.description.split("\n\n").map((paragraph: string, idx: number) => (
-                              <NumberedProcessPoint
-                                key={idx}
-                                number={idx + 1}
-                                description={paragraph}
-                                color={project.promptColor}
-                              />
-                ))}
-              </div>
+                            {project.slug === "Melo" ? (
+                              <UnderwaySign color={project.promptColor} />
+                            ) : (
+                              step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                <NumberedProcessPoint
+                                  key={idx}
+                                  number={idx + 1}
+                                  description={paragraph}
+                                  color={project.promptColor}
+                                />
+                              ))
+                            )}
+                          </div>
                         ) : step.title === "Define" ? (
                           <>
-                          <h2 className="text-xl font-semibold mt-8 mb-4">User Research</h2>
-                              {project.slug === "Seelie" ? (
-                                <SeelieResearchCharts promptColor={project.promptColor || "#53b948"} />
-                              ) : project.slug === "HeartRisk" ? (
-                                <HeartRiskResearchCharts promptColor={project.promptColor || "#e11d48"} />
-                              ) : project.slug === "RecoverEase" ? (
-                                <RecoverEaseResearchCharts promptColor={project.promptColor || "#0891b2"} />
-                              ) : (
-                                <div className="grid md:grid-cols-2 gap-8">
-                                  {project.researchImages?.map((image, index) => (
-                                    <FadeInImage
-                                      key={index}
-                                      src={image}
-                                      alt={`Research ${index + 1}`}
-                                      fill
-                                      className="aspect-video relative rounded-lg overflow-hidden border"
-                                    />
+                            <h2 className="text-xl font-semibold mt-8 mb-4">User Research</h2>
+                            {project.slug === "Melo" ? (
+                              <>
+                                <div className="prose prose-lg dark:prose-invert max-w-none mb-8">
+                                  <p>
+                                    Our research revealed key insights about our target audience. We identified that {' '} 
+                                    <HighlightedText color={project.promptColor}> food waste reduction </HighlightedText> {' '}
+                                    and {' '}
+                                    <HighlightedText color={project.promptColor}> sustainable shopping </HighlightedText> {' '}
+                                    are critical pain points for environmentally conscious consumers.
+                                  </p>
+                                </div>
+                                
+                                <h3 className="text-xl font-semibold mt-8 mb-4">User Personas</h3>
+                                <MeloPersonas promptColor={project.promptColor} />
+                              </>
+                            ) : project.slug === "Seelie" ? (
+                              <SeelieResearchCharts promptColor={project.promptColor || "#53b948"} />
+                            ) : project.slug === "HeartRisk" ? (
+                              <HeartRiskResearchCharts promptColor={project.promptColor || "#e11d48"} />
+                            ) : project.slug === "RecoverEase" ? (
+                              <RecoverEaseResearchCharts promptColor={project.promptColor || "#0891b2"} />
+                            ) : (
+                              <div className="grid md:grid-cols-2 gap-8">
+                                {project.researchImages?.map((image, index) => (
+                                  <FadeInImage
+                                    key={index}
+                                    src={image}
+                                    alt={`Research ${index + 1}`}
+                                    fill
+                                    className="aspect-video relative rounded-lg overflow-hidden border"
+                                  />
                                 ))}
-                </div>
-              )}
-                            <div className="prose prose-lg prose-invert max-w-none">
-                              {/* Example of using HighlightedText in a static paragraph */}
-                              <p>
-                                Our research revealed key insights about our target audience. We identified that {' '} 
-                                <HighlightedText color={project.promptColor}> financial literacy </HighlightedText> {' '}
-                                and {' '}
-                                <HighlightedText color={project.promptColor}> budget management </HighlightedText> {' '}
-                                are critical pain points for Gen Z users.
-                              </p>
-                              
-                              {/* Regular paragraphs from the project data */}
-                              {step.description.split("\n\n").map((paragraph: string, idx: number) => (
-                                <p key={idx}>{paragraph}</p>
-                              ))}
-              </div>
-
-                            <h3 className="text-xl font-semibold mt-8 mb-4">User Personas</h3>
-                            <div className="space-y-8 mt-6">
-                              {project.slug === "HeartRisk" ? (
-                                <HeartRiskPersonas promptColor={project.promptColor} />
-                              ) : project.slug === "RecoverEase" ? (
-                                <RecoverEasePersonas promptColor={project.promptColor} />
-                              ) : project.slug === "Seelie" ? (
-                                <>
-                                  <UserPersonaCard
-                                    name="Maya Tanaka"
-                                    subtitle="International Student"
-                                    age={20}
-                                    location="Toronto, Canada (originally from Japan)"
-                                    occupation="Business Administration Student"
-                                    painPoints={[
-                                      "Struggles with understanding the Canadian banking system (credit scores, loans, budgeting).",
-                                      "Feels overwhelmed managing multiple expenses (tuition, rent, groceries).",
-                                      "Prefers digital solutions over traditional banking but finds it hard to trust finance apps.",
-                                      "Wants reminders for bills & subscription renewals to avoid unexpected charges."
-                                    ]}
-                                    goals={[
-                                      "Learn and navigate Canadian banking easily.",
-                                      "Have a personalized assistant to help with finance-related questions.",
-                                      "Track expenses, savings, and avoid overdraft fees."
-                                    ]}
-                                    imageUrl="/user personas - seelie/seelie-person1.jpg"
-                                    color={project.promptColor}
-                                  />
-                                  
-                                  <UserPersonaCard
-                                    name="Jordan Smith"
-                                    subtitle="Forgetful Freelancer"
-                                    age={22}
-                                    location="Vancouver, Canada"
-                                    occupation="Part-time content creator, freelance graphic designer"
-                                    painPoints={[
-                                      "Juggles multiple gigs and irregular income but forgets to save money.",
-                                      "Loses track of subscription payments (Spotify, Adobe, gym, Netflix, etc.).",
-                                      "Has mild ADHD, making task management difficult.",
-                                      "Finds traditional banking apps too complicated and boring."
-                                    ]}
-                                    goals={[
-                                      "Use Seelie as a \"gentle assistant\" to remind him about financial goals.",
-                                      "Get smart, friendly spending insights without overwhelming data.",
-                                      "Set non-intrusive reminders for upcoming payments."
-                                    ]}
-                                    imageUrl="/user personas - seelie/seelie-person2.jpg"
-                                    color={project.promptColor}
-                                  />
-                                </>
-                              ) : null}
-              </div>
-
-                            {/* Add Competitive Analysis Table here, right after User Personas */}
-                            {project.slug === "Seelie" && (
-                              <>
-                                <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
-                                <CompetitiveAnalysisTable promptColor={project.promptColor} />
-                              </>
-                            )}
-                            
-                            {project.slug === "HeartRisk" && (
-                              <>
-                                <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
-                                <HeartRiskCompetitiveAnalysis promptColor={project.promptColor} />
-                              </>
-                            )}
-                            
-                            {project.slug === "RecoverEase" && (
-                              <>
-                                <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
-                                <RecoverEaseCompetitiveAnalysis promptColor={project.promptColor} />
-                              </>
-                            )}
-
-                            {step.image && (
-                              <FadeInImage
-                                src={step.image}
-                                alt={step.title}
-                                width={1200}
-                                height={800}
-                                className="rounded-xl overflow-hidden my-6"
-                              />
+                              </div>
                             )}
                           </>
                         ) : step.title === "Deliver" ? (
                           <>
-                            <div className="prose prose-lg prose-invert max-w-none">
-                              {step.description.split("\n\n").map((paragraph: string, idx: number) => (
-                                <p key={idx}>{paragraph}</p>
-                              ))}
-                    </div>
-                            
-                            {/* Project-specific content for Deliver step */}
-                            {project.slug === "Seelie" ? (
+                            {project.slug === "Melo" ? (
+                              <UnderwaySign color={project.promptColor} />
+                            ) : (
                               <>
-                                <FadeInVideo 
-                                  src="/seelie-video.mp4" 
-                                  className="my-6 aspect-video"
-                                />
-                                <p 
-                                  className="text-center text-lg mt-4 font-medium"
-                                  style={{ color: project.promptColor || "#53b948" }}
-                                >
-                                  Check out this video, highlighting my favourite and most GenZ feature of Seelie!
-                                </p>
+                                <div className="prose prose-lg prose-invert max-w-none">
+                                  {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                    <p key={idx}>{paragraph}</p>
+                                  ))}
+                                </div>
+                                
+                                {/* Project-specific content for Deliver step */}
+                                {project.slug === "Seelie" ? (
+                                  <>
+                                    <FadeInVideo 
+                                      src="/seelie-video.mp4" 
+                                      className="my-6 aspect-video"
+                                    />
+                                    <p 
+                                      className="text-center text-lg mt-4 font-medium"
+                                      style={{ color: project.promptColor || "#53b948" }}
+                                    >
+                                      Check out this video, highlighting my favourite and most GenZ feature of Seelie!
+                                    </p>
+                                  </>
+                                ) : step.image ? (
+                                  <FadeInImage
+                                    src={step.image}
+                                    alt={step.title}
+                                    width={1200}
+                                    height={800}
+                                    className="rounded-xl overflow-hidden my-6"
+                                  />
+                                ) : null}
                               </>
-                            ) : step.image ? (
-                              <FadeInImage
-                                src={step.image}
-                                alt={step.title}
-                                width={1200}
-                                height={800}
-                                className="rounded-xl overflow-hidden my-6"
-                              />
-                            ) : null}
+                            )}
                           </>
                         ) : (
                           <>
-                            <div className="prose prose-lg prose-invert max-w-none">
-                              {step.description.split("\n\n").map((paragraph: string, idx: number) => (
-                                <p key={idx}>{paragraph}</p>
-                  ))}
-                </div>
-                            {step.image && (
-                              <FadeInImage
-                                src={step.image || "/placeholder.svg"}
-                                alt={step.title}
-                                width={1200}
-                                height={800}
-                                className="rounded-xl overflow-hidden my-6"
-                              />
+                            {project.slug === "Melo" ? (
+                              <UnderwaySign color={project.promptColor} />
+                            ) : (
+                              <>
+                                <div className="prose prose-lg prose-invert max-w-none">
+                                  {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                    <p key={idx}>{paragraph}</p>
+                                  ))}
+                                </div>
+                                {step.image && (
+                                  <FadeInImage
+                                    src={step.image || "/placeholder.svg"}
+                                    alt={step.title}
+                                    width={1200}
+                                    height={800}
+                                    className="rounded-xl overflow-hidden my-6"
+                                  />
+                                )}
+                              </>
                             )}
                           </>
                         )}
-                    </div>
-                  ))}
-                </div>
-                ) : (
-              <div className="space-y-16">
-                    {project.designProcess?.map((step: DesignProcessStep, index: number) => (
-                  <div key={index} className="space-y-6">
-                    <h3 className="text-2xl font-semibold">{step.title}</h3>
-                    <div className="prose prose-lg prose-invert max-w-none">
-                          {step.description.split("\n\n").map((paragraph: string, idx: number) => (
-                        <p key={idx}>{paragraph}</p>
-                      ))}
-                    </div>
-                    {step.image && (
-                          <FadeInImage
-                          src={step.image}
-                          alt={step.title}
-                          width={1200}
-                          height={800}
-                            className="rounded-xl overflow-hidden my-6"
-                        />
-                    )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                ) : (
+                  <div className="space-y-16">
+                    {project.designProcess?.map((step: DesignProcessStep, index: number) => (
+                      <div key={index} className="space-y-6">
+                        <h3 className="text-2xl font-semibold">{step.title}</h3>
+                        <div className="prose prose-lg prose-invert max-w-none">
+                          {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                            <p key={idx}>{paragraph}</p>
+                          ))}
+                        </div>
+                        {step.image && (
+                          <FadeInImage
+                            src={step.image}
+                            alt={step.title}
+                            width={1200}
+                            height={800}
+                            className="rounded-xl overflow-hidden my-6"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 )}
-            </section>
+              </section>
 
               {/* Solution Section */}
               <section id="solution" className="space-y-8 mb-16">
@@ -1157,7 +1099,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                         group-hover:fill-yellow-300 
                         group-hover:drop-shadow-[0_0_8px_#fef08a]"
                     />
-                </div>
+                  </div>
                   <div 
                     className="prose prose-lg dark:prose-invert max-w-none"
                   >
@@ -1173,8 +1115,8 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                           fill
                           className="aspect-video relative rounded-lg overflow-hidden border"
                         />
-                  ))}
-                </div>
+                      ))}
+                    </div>
                   )}
                 </div>
                 
@@ -1271,22 +1213,26 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                      "Improvements & Next Steps"}
                   </h2>
                   <div className="space-y-8 max-w-none">
-                    {project.reflection.split("\n\n").map((item, idx) => {
-                      // Check if item contains a title (the first line before a newline)
-                      const parts = item.split("\n");
-                      const title = parts[0];
-                      const content = parts.slice(1).join("\n").trim();
-                      
-                      return (
-                        <div key={idx} className="flex items-start gap-5">
-                          <span className="text-xl flex-shrink-0 mt-1">🟢</span>
-                          <div>
-                            <h3 className="text-xl font-bold mb-1">{title}</h3>
-                            <p className="text-base text-muted-foreground leading-relaxed">{content}</p>
+                    {project.slug === "Melo" && project.reflection.includes("Under Development") ? (
+                      <UnderwaySign color={project.promptColor} />
+                    ) : (
+                      project.reflection.split("\n\n").map((item, idx) => {
+                        // Check if item contains a title (the first line before a newline)
+                        const parts = item.split("\n");
+                        const title = parts[0];
+                        const content = parts.slice(1).join("\n").trim();
+                        
+                        return (
+                          <div key={idx} className="flex items-start gap-5">
+                            <span className="text-xl flex-shrink-0 mt-1">🟢</span>
+                            <div>
+                              <h3 className="text-xl font-bold mb-1">{title}</h3>
+                              <p className="text-base text-muted-foreground leading-relaxed">{content}</p>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                    )}
                 </div>
               </section>
             )}

@@ -62,6 +62,68 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "Melo",
+    title: "Melo",
+    tagline: "Fresh choices, zero waste",
+    description: "An e-commerce app designed to help people shop sustainably, minimizing food and packaging waste",
+    fullDescription:
+      "Melo is an innovative e-commerce platform addressing the challenges of sustainable shopping and food waste reduction. In an era where environmental consciousness is crucial, Melo helps users plan purchases efficiently, track expiration dates, and discover creative ways to repurpose items before they go bad.\n\nThe project is driven by extensive user research and iterative testing, focusing on practical solutions that fit seamlessly into daily life. With intuitive tracking tools and AI-powered suggestions, Melo aims to make sustainable shopping accessible and enjoyable.",
+    technologies: ["Figma", "FigJam", "Canva"],
+    imageUrl: "/melo/melo.png", // Update with actual image later
+    heroImage: "/melo/melo.png", // Update with actual image later
+    role: "UI/UX Designer",
+    timeline: "Feb 2025 - ongoing",
+    team: "Solo project",
+    readTime: 8,
+    problemStatement:
+      "How might we design an app that helps people shop sustainably, minimizing food and packaging waste by assisting users in planning purchases, tracking expiration dates, and suggesting ways to repurpose items before they go bad?",
+    solution:
+      "My solution is to build an intuitive e-commerce app that transforms sustainable shopping into a user-friendly experience. Melo provides smart inventory tracking with expiration alerts, AI-powered recipe suggestions based on available ingredients, and personalized shopping recommendations that minimize waste while maximizing value.",
+    designProcess: [
+      {
+        title: "Discover",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+      {
+        title: "Define",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+      {
+        title: "Develop",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+      {
+        title: "Deliver",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+    ],
+    reflection: "🚧 Under Development 🚧",
+    teamMembers: [
+      {
+        name: "Heral Kumar",
+        role: "UI/UX Designer",
+        link: "https://www.linkedin.com/in/heral-kumar/",
+      }
+    ],
+    promptColor: "#FA5C5C",
+    promptTextColor: "#FA5C5C",
+    areaOfFocus: "E-commerce",
+    challengeMetrics: [
+      { number: "33%", label: "of food produced globally goes to waste annually" },
+      { number: "61%", label: "of consumers want to reduce their environmental impact" },
+      { number: "40%", label: "of food waste occurs at the consumer level" }
+    ],
+    resultMetrics: [
+      { number: "🚧", label: "Project in progress" },
+      { number: "🚧", label: "Project in progress" },
+      { number: "🚧", label: "Project in progress" }
+    ]
+  },
+  {
     slug: "Seelie",
     title: "Seelie",
     tagline: "Banking the GenZ way",
@@ -179,105 +241,6 @@ export const projects: Project[] = [
     ]
   },
   {
-    slug: "HeartRisk",
-    title: "Heart Risk Prediction",
-    tagline: "Predicting Risk of a Heart Attack",
-    description: "A machine learning model designed to predict heart attack risk based on large health datasets",
-    fullDescription:
-      "Heart disease remains one of the leading causes of death worldwide, yet early risk detection is often challenging due to the complexity of medical data. This project delivers a machine learning model that analyzes large volumes of patient records to identify high-risk individuals and provide timely interventions.\n\nBy processing and normalizing over 10,000 rows of health data, the model achieves 77% accuracy in predicting heart attack risk, providing healthcare professionals with a valuable tool for early intervention and better patient care.",
-    technologies: ["R", "Machine Learning", "Data Science", "Predictive Analytics", "Healthcare", "Data Visualization"],
-    imageUrl: "/HeartRisk.jpg",
-    heroImage: "/HeartRisk.jpg",
-    githubUrl: "https://github.com/heralk21/Heart-Attack-Risk-Predictor---DSCI-Project",
-    featured: true,
-    role: "Data Scientist & ML Engineer",
-    timeline: "March 2023 - June 2023",
-    team: "Team of 3",
-    readTime: 8,
-    introduction:
-      "Heart disease remains one of the leading causes of death worldwide, yet early risk detection is often challenging due to the complexity of medical data. Healthcare providers needed an efficient, data-driven approach to analyze large volumes of patient records, identify high-risk individuals, and provide timely interventions. Traditional diagnostic methods were time-consuming and sometimes lacked predictive accuracy.",
-    overview:
-      "Heart Risk Prediction is a machine learning model that analyzes large health datasets to predict heart attack risk. The project involved processing and normalizing over 10,000 rows of health data using R, implementing feature engineering and exploratory data analysis to enhance predictive performance.",
-    problemStatement:
-      "How might we leverage machine learning to provide healthcare professionals with a data-driven approach to analyze large volumes of patient records, identify high-risk individuals, and enable timely interventions for heart disease prevention?",
-    solution:
-      "Developed a predictive model in R with 77% accuracy, processing and normalizing 10,000+ rows of health data. Utilized tidyverse, tidymodels, and ggplot2 for data analysis and visualization, incorporating feature engineering and exploratory data analysis (EDA) to enhance predictive performance.",
-    solutionImage: "",
-    prototypeImages: [
-      {
-        src: "",
-        alt: "Dashboard showing risk assessment overview",
-      },
-      {
-        src: "",
-        alt: "Data input interface for health metrics",
-      },
-      {
-        src: "",
-        alt: "Personalized recommendations page",
-      },
-      {
-        src: "",
-        alt: "Historical tracking of health metrics",
-      },
-    ],
-    designProcess: [
-      {
-        title: "Discover",
-        description:
-          "Data Exploration – We analyzed cardiovascular health datasets and identified key predictive factors for heart disease risk.\n\nUser Research – Interviews with healthcare professionals revealed challenges in analyzing complex medical data and the need for efficient risk prediction tools.\n\nExisting Solutions Analysis – We evaluated current risk prediction methods and found many lacked sufficient accuracy or were too time-consuming for practical clinical use.",
-        image: "",
-      },
-      {
-        title: "Define",
-        description:
-          "Based on our research, we defined the key requirements for an effective heart attack risk prediction model, including accuracy, interpretability, and clinical relevance. We established success metrics focused on prediction accuracy, model performance, and the actionability of the insights generated.\n\nWe identified that healthcare providers need not just risk scores, but also insights into which factors contribute most significantly to a patient's risk profile.",
-        image: "",
-      },
-      {
-        title: "Develop",
-        description:
-          "Data Preprocessing – We cleaned and normalized over 10,000 rows of health data, handling missing values and outliers to ensure model reliability.\n\nModel Development – We implemented various machine learning algorithms in R, testing and comparing their performance to identify the most effective approach.\n\nFeature Engineering – We created new features and selected the most predictive variables to enhance model performance, using exploratory data analysis to guide our decisions.",
-        image: "",
-      },
-      {
-        title: "Deliver",
-        description:
-          "The final solution features a machine learning model with 77% accuracy in predicting heart attack risk. The model provides healthcare professionals with actionable insights, enabling early intervention and better patient care. We also developed visualizations to make the model's predictions more interpretable and accessible to medical professionals.",
-        image: "",
-      },
-    ],
-    outcome:
-      "The model successfully provided healthcare professionals with actionable insights, allowing for early intervention and better patient care. By identifying key risk factors, the system helped prioritize high-risk individuals, improving efficiency in heart disease prevention strategies. Visualizations generated from the data allowed for easier interpretation and understanding, making the insights more accessible to medical professionals.",
-    reflection:
-      "Model Enhancement\nImplement more advanced algorithms and ensemble methods to further improve prediction accuracy and reliability.\n\nExpanded Dataset\nIncorporate additional health metrics and demographic factors to create a more comprehensive risk assessment model.\n\nInteractive Dashboard\nDevelop a user-friendly interface for healthcare providers to interact with the model and visualize patient risk profiles.\n\nClinical Validation\nConduct more extensive validation studies with diverse patient populations to ensure the model's generalizability and clinical utility.",
-    teamMembers: [
-      {
-        name: "Heral Kumar",
-        role: "Data Scientist & ML Engineer",
-        link: "https://www.linkedin.com/in/heral-kumar/",
-      },
-    ],
-    promptColor: "#e11d48",
-    promptTextColor: "#ffffff",
-    areaOfFocus: "HealthTech",
-    challengeMetrics: [
-      { number: "80%", label: "of heart disease is preventable with early intervention" },
-      { number: "67%", label: "of people don't know their cardiac risk factors" },
-      { number: "3.2x", label: "higher recovery rates with early detection" }
-    ],
-    solutionMetrics: [
-      { number: "77%", label: "prediction accuracy on validation data" },
-      { number: "10,000+", label: "health records analyzed and processed" },
-      { number: "85%", label: "of key risk factors identified" }
-    ],
-    resultMetrics: [
-      { number: "3", label: "critical risk factors identified for intervention" },
-      { number: "86%", label: "of healthcare providers found insights actionable" },
-      { number: "8.5/10", label: "average satisfaction rating from medical professionals" }
-    ]
-  },
-  {
     slug: "RecoverEase",
     title: "RecoverEase",
     tagline: "Lost and Found Management System",
@@ -376,6 +339,106 @@ export const projects: Project[] = [
       { number: "8.7/10", label: "average user satisfaction rating" }
     ]
   },
+  {
+    slug: "HeartRisk",
+    title: "Heart Risk Prediction",
+    tagline: "Predicting Risk of a Heart Attack",
+    description: "A machine learning model designed to predict heart attack risk based on large health datasets",
+    fullDescription:
+      "Heart disease remains one of the leading causes of death worldwide, yet early risk detection is often challenging due to the complexity of medical data. This project delivers a machine learning model that analyzes large volumes of patient records to identify high-risk individuals and provide timely interventions.\n\nBy processing and normalizing over 10,000 rows of health data, the model achieves 77% accuracy in predicting heart attack risk, providing healthcare professionals with a valuable tool for early intervention and better patient care.",
+    technologies: ["R", "Machine Learning", "Data Science", "Predictive Analytics", "Healthcare", "Data Visualization"],
+    imageUrl: "/HeartRisk.jpg",
+    heroImage: "/HeartRisk.jpg",
+    githubUrl: "https://github.com/heralk21/Heart-Attack-Risk-Predictor---DSCI-Project",
+    featured: true,
+    role: "Data Scientist & ML Engineer",
+    timeline: "March 2023 - June 2023",
+    team: "Team of 3",
+    readTime: 8,
+    introduction:
+      "Heart disease remains one of the leading causes of death worldwide, yet early risk detection is often challenging due to the complexity of medical data. Healthcare providers needed an efficient, data-driven approach to analyze large volumes of patient records, identify high-risk individuals, and provide timely interventions. Traditional diagnostic methods were time-consuming and sometimes lacked predictive accuracy.",
+    overview:
+      "Heart Risk Prediction is a machine learning model that analyzes large health datasets to predict heart attack risk. The project involved processing and normalizing over 10,000 rows of health data using R, implementing feature engineering and exploratory data analysis to enhance predictive performance.",
+    problemStatement:
+      "How might we leverage machine learning to provide healthcare professionals with a data-driven approach to analyze large volumes of patient records, identify high-risk individuals, and enable timely interventions for heart disease prevention?",
+    solution:
+      "Developed a predictive model in R with 77% accuracy, processing and normalizing 10,000+ rows of health data. Utilized tidyverse, tidymodels, and ggplot2 for data analysis and visualization, incorporating feature engineering and exploratory data analysis (EDA) to enhance predictive performance.",
+    solutionImage: "",
+    prototypeImages: [
+      {
+        src: "",
+        alt: "Dashboard showing risk assessment overview",
+      },
+      {
+        src: "",
+        alt: "Data input interface for health metrics",
+      },
+      {
+        src: "",
+        alt: "Personalized recommendations page",
+      },
+      {
+        src: "",
+        alt: "Historical tracking of health metrics",
+      },
+    ],
+    designProcess: [
+      {
+        title: "Discover",
+        description:
+          "Data Exploration – We analyzed cardiovascular health datasets and identified key predictive factors for heart disease risk.\n\nUser Research – Interviews with healthcare professionals revealed challenges in analyzing complex medical data and the need for efficient risk prediction tools.\n\nExisting Solutions Analysis – We evaluated current risk prediction methods and found many lacked sufficient accuracy or were too time-consuming for practical clinical use.",
+        image: "",
+      },
+      {
+        title: "Define",
+        description:
+          "Based on our research, we defined the key requirements for an effective heart attack risk prediction model, including accuracy, interpretability, and clinical relevance. We established success metrics focused on prediction accuracy, model performance, and the actionability of the insights generated.\n\nWe identified that healthcare providers need not just risk scores, but also insights into which factors contribute most significantly to a patient's risk profile.",
+        image: "",
+      },
+      {
+        title: "Develop",
+        description:
+          "Data Preprocessing – We cleaned and normalized over 10,000 rows of health data, handling missing values and outliers to ensure model reliability.\n\nModel Development – We implemented various machine learning algorithms in R, testing and comparing their performance to identify the most effective approach.\n\nFeature Engineering – We created new features and selected the most predictive variables to enhance model performance, using exploratory data analysis to guide our decisions.",
+        image: "",
+      },
+      {
+        title: "Deliver",
+        description:
+          "The final solution features a machine learning model with 77% accuracy in predicting heart attack risk. The model provides healthcare professionals with actionable insights, enabling early intervention and better patient care. We also developed visualizations to make the model's predictions more interpretable and accessible to medical professionals.",
+        image: "",
+      },
+    ],
+    outcome:
+      "The model successfully provided healthcare professionals with actionable insights, allowing for early intervention and better patient care. By identifying key risk factors, the system helped prioritize high-risk individuals, improving efficiency in heart disease prevention strategies. Visualizations generated from the data allowed for easier interpretation and understanding, making the insights more accessible to medical professionals.",
+    reflection:
+      "Model Enhancement\nImplement more advanced algorithms and ensemble methods to further improve prediction accuracy and reliability.\n\nExpanded Dataset\nIncorporate additional health metrics and demographic factors to create a more comprehensive risk assessment model.\n\nInteractive Dashboard\nDevelop a user-friendly interface for healthcare providers to interact with the model and visualize patient risk profiles.\n\nClinical Validation\nConduct more extensive validation studies with diverse patient populations to ensure the model's generalizability and clinical utility.",
+    teamMembers: [
+      {
+        name: "Heral Kumar",
+        role: "Data Scientist & ML Engineer",
+        link: "https://www.linkedin.com/in/heral-kumar/",
+      },
+    ],
+    promptColor: "#e11d48",
+    promptTextColor: "#ffffff",
+    areaOfFocus: "HealthTech",
+    challengeMetrics: [
+      { number: "80%", label: "of heart disease is preventable with early intervention" },
+      { number: "67%", label: "of people don't know their cardiac risk factors" },
+      { number: "3.2x", label: "higher recovery rates with early detection" }
+    ],
+    solutionMetrics: [
+      { number: "77%", label: "prediction accuracy on validation data" },
+      { number: "10,000+", label: "health records analyzed and processed" },
+      { number: "85%", label: "of key risk factors identified" }
+    ],
+    resultMetrics: [
+      { number: "3", label: "critical risk factors identified for intervention" },
+      { number: "86%", label: "of healthcare providers found insights actionable" },
+      { number: "8.5/10", label: "average satisfaction rating from medical professionals" }
+    ]
+  },
+  
   // Add more projects as needed
 ]
 

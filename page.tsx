@@ -95,6 +95,11 @@ export default function Portfolio() {
 
   // Debounced URL update
   const updateURL = useCallback((path: string) => {
+    // Get the current section from the URL to compare
+    const currentSection = window.location.search.includes(`section=${path}`);
+    // If we're already at this section, don't update the URL
+    if (currentSection) return;
+    
     if (scrollTimeout.current) {
       clearTimeout(scrollTimeout.current);
     }
