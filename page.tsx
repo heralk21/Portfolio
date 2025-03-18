@@ -51,13 +51,15 @@ function ClientSideNavigation({
   updateURL: (path: string) => void
 }) {
   const searchParams = useSearchParams();
+  const hasHandledInitialScroll = useRef(false);
   
   // Handle initial section scroll from URL
   useEffect(() => {
     const section = searchParams?.get('section');
-    if (section) {
+    if (section && !hasHandledInitialScroll.current) {
       const menuItem = menuItems.find(item => item.path === section);
       if (menuItem?.ref.current) {
+        hasHandledInitialScroll.current = true;
         setIsScrolling(true);
         menuItem.ref.current.scrollIntoView({ behavior: "smooth" });
         setActiveSection(section);
