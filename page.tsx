@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
@@ -11,13 +12,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CaseStudyList } from "@/components/case-study";
+// import { CaseStudyList } from "@/components/case-study";
 import { Dancing_Script } from "next/font/google";
 import { Timeline } from "./timeline";
-import ColorfulText from "@/components/colorful-text";
-import { SkillsSection } from "@/components/skills-section";
-import { ThemeToggle } from "@/components/theme-toggle";
-import Logo from "@/components/logo";
+// import ColorfulText from "@/components/colorful-text";
+// import { SkillsSection } from "@/components/skills-section";
+// import { ThemeToggle } from "@/components/theme-toggle";
+// import Logo from "@/components/logo";
+import Link from "next/link";
+import { projects } from "./lib/projects";
+import Logo from "./app/components/shared/site-logo";
+import { ThemeToggle } from "./app/components/shared/theme-switcher";
+import ColorfulText from "./app/components/shared/gradient-text";
+import { SkillsSection } from "./app/components/sections/skills-grid";
+
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -31,22 +39,108 @@ const dancingScript = Dancing_Script({
 // })
 
 export default function Portfolio() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [isScrolling, setIsScrolling] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const aboutRef = useRef<HTMLDivElement>(null);
   const experienceRef = useRef<HTMLDivElement>(null);
   const SkillsRef = useRef<HTMLDivElement>(null);
   const workRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+  const scrollTimeout = useRef<NodeJS.Timeout>();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const menuItems = [
-    { label: "About", ref: aboutRef },
-    { label: "Experience", ref: experienceRef },
-    { label: "Skills", ref: SkillsRef },
-    { label: "Work", ref: workRef },
-    { label: "Contact", ref: contactRef },
-  ]
+    { label: "About", ref: aboutRef, path: "about" },
+    { label: "Experience", ref: experienceRef, path: "experience" },
+    { label: "Skills", ref: SkillsRef, path: "skills" },
+    { label: "Work", ref: workRef, path: "work" },
+    { label: "Contact", ref: contactRef, path: "contact" },
+  ];
+
+  // Handle initial section scroll from URL
+  useEffect(() => {
+    const section = searchParams.get('section');
+    if (section) {
+      const menuItem = menuItems.find(item => item.path === section);
+      if (menuItem?.ref.current) {
+        setIsScrolling(true);
+        menuItem.ref.current.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(section);
+        setTimeout(() => setIsScrolling(false), 1000);
+      }
+    }
+  }, [searchParams]);
+
+  // Debounced URL update
+  const updateURL = useCallback((path: string) => {
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+    }
+    scrollTimeout.current = setTimeout(() => {
+      router.push(`?section=${path}`, { scroll: false });
+    }, 100);
+  }, [router]);
+
+  // Optimized Intersection Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isScrolling) return;
+
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+            const section = menuItems.find(
+              (item) => item.ref.current === entry.target
+            );
+            if (section && activeSection !== section.path) {
+              setActiveSection(section.path);
+              updateURL(section.path);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: "-10% 0px",
+        threshold: [0.1, 0.5],
+      }
+    );
+
+    menuItems.forEach((item) => {
+      if (item.ref.current) {
+        observer.observe(item.ref.current);
+      }
+    });
+
+    return () => {
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      observer.disconnect();
+    };
+  }, [activeSection, isScrolling, updateURL]);
+
+  const handleNavigation = (item: typeof menuItems[0]) => {
+    if (item.ref.current) {
+      setIsScrolling(true);
+      setActiveSection(item.path);
+      updateURL(item.path);
+      item.ref.current.scrollIntoView({ behavior: "smooth" });
+      setIsMenuOpen(false);
+      setTimeout(() => setIsScrolling(false), 1000);
+    }
+  };
+
+  // Update the button className to show active state
+  const getButtonClassName = (path: string) => `
+    nav-item text-sm font-medium transition-all duration-300 ease-in-out px-3 py-1
+    ${activeSection === path 
+      ? "text-primary font-semibold dark:text-rose-500" 
+      : "text-muted-foreground hover:text-primary/70 dark:hover:text-rose-500"}
+  `;
 
   return (
     <div className={`min-h-screen bg-background ${dancingScript.variable}`}>
@@ -58,10 +152,8 @@ export default function Portfolio() {
             {menuItems.map((item) => (
               <button
                 key={item.label}
-                onClick={() => item.ref.current?.scrollIntoView({ behavior: "smooth" })}
-                className="nav-item text-sm font-medium text-muted-foreground transition-all duration-300 ease-in-out hover:text-primary/70 hover:font-medium px-3 py-1 dark:hover:text-rose-500"
-                // onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-                // onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
+                onClick={() => handleNavigation(item)}
+                className={getButtonClassName(item.path)}
               >
                 {item.label}
               </button>
@@ -79,11 +171,11 @@ export default function Portfolio() {
             {menuItems.map((item) => (
               <button
                 key={item.label}
-                onClick={() => {
-                  item.ref.current?.scrollIntoView({ behavior: "smooth" })
-                  setIsMenuOpen(false)
-                }}
-                className="block w-full text-left px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted"
+                onClick={() => handleNavigation(item)}
+                className={`block w-full text-left px-4 py-2 text-sm font-medium 
+                  ${activeSection === item.path 
+                    ? "text-primary bg-transparent" 
+                    : "text-muted-foreground hover:bg-transparent"}`}
               >
                 {item.label}
               </button>
@@ -172,99 +264,100 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section ref={experienceRef} className="py-24 lg:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="space-y-2 text-center"
-          >
-            <h2
-              className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.fontFamily = "Arial, sans-serif")
-              }
+        <div ref={experienceRef} className="min-h-screen">
+          <section className="py-24 lg:py-32">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="space-y-2 text-center"
             >
-              Experience
-            </h2>
-            <p className="text-muted-foreground">
-              A timeline of my professional journey.
-            </p>
-          </motion.div>
-          <Timeline
-            data={[
-              {
-                year: "Jan 2025 - Present",
-                title: "Web Designer & Developer",
-                company: "UBC iGem (International Genetically Engineered Machine Foundation)",
-                content: (
-                  <p>
-                    Designing and developing the 2025 UBC iGEM wiki website, 
-                    integrating a Mars-themed UI to communicate cyanobacteria research. 
-                    Revamping the UBC iGEM website, enhancing accessibility and UX with Figma, 
-                    wireframing, prototyping, and coding. Creating storytelling visuals for 
-                    educational outreach, including children’s storybooks simplifying 
-                    synthetic biology concepts.
-                  </p>
-                ),
-                image1: "/ubcigem1.png",
-                image2: "/ubcigem2.png",
-              },
-              {
-                year: "Apr 2024 - Present",
-                title: "Senior Orientation Leader",
-                company: "University of British Columbia",
-                content: (
-                  <p>
-                    Leading and mentoring a team of 10+ orientation leaders,
-                    ensuring the success of 5+ major university events.
-                    Organized a Transfer Student Social Meet with 100+
-                    attendees, achieving a 93% positive feedback rate. Enhanced
-                    team collaboration and inclusivity, driving a 19% increase
-                    in event participation compared to previous years.
-                  </p>
-                ),
-                image1: "/SeniorOL1.jpg",
-                image2: "/SeniorOL2.jpg",
-              },
-              {
-                year: "Sept 2024 - Dec 2024",
-                title: "Coding and Robotics Tutor",
-                company: "Wize Computing Academy",
-                content: (
-                  <p>
-                    Taught 10+ students aged 10–12 using Python and LEGO
-                    Education SPIKE Prime kits for hands-on coding and robotics
-                    projects. Sent regular individual progress reports to
-                    parents, fostering transparency and tracking improvements.
-                    Cultivated problem-solving and critical-thinking skills,
-                    enhancing students’ confidence in technology and coding.
-                  </p>
-                ),
-                image1: "/Wize_Academy3.jpg",
-                image2: "/Wize_Academy2.jpg",
-              },
-              {
-                year: "Jun 2023 - Apr 2024",
-                title: "Orientation Leader",
-                company: "University of British Columbia",
-                content: (
-                  <p>
-                    Led orientation groups of 15+ high school students,
-                    fostering a welcoming and inclusive community. Organized
-                    engaging activities that boosted student satisfaction by
-                    57%. Collaborated with peers and staff to deliver seamless
-                    events, strengthening communication and teamwork skills.
-                  </p>
-                ),
-                image1: "/OL1.jpg",
-                image2: "/OL2.jpg",
-              },
-            ]}
-          />
-        </section>
+              <h2
+                className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.fontFamily = "Arial, sans-serif")
+                }
+              >
+                Experience
+              </h2>
+              <p className="text-muted-foreground">
+                A timeline of my professional journey.
+              </p>
+            </motion.div>
+            <Timeline
+              data={[
+                {
+                  year: "Jan 2025 - Present",
+                  title: "Web Designer & Developer",
+                  company: "UBC iGem (International Genetically Engineered Machine Foundation)",
+                  content: (
+                    <p>
+                      Designing and developing the 2025 UBC iGEM wiki website, 
+                      integrating a Mars-themed UI to communicate cyanobacteria research. 
+                      Revamping the UBC iGEM website, enhancing accessibility and UX with Figma, 
+                      wireframing, prototyping, and coding. Creating storytelling visuals for 
+                      educational outreach, including children's storybooks simplifying 
+                      synthetic biology concepts.
+                    </p>
+                  ),
+                  image1: "/ubcigem1.png",
+                  image2: "/ubcigem2.png",
+                },
+                {
+                  year: "Apr 2024 - Present",
+                  title: "Senior Orientation Leader",
+                  company: "University of British Columbia",
+                  content: (
+                    <p>
+                      Leading and mentoring a team of 10+ orientation leaders,
+                      ensuring the success of 5+ major university events.
+                      Organized a Transfer Student Social Meet with 100+
+                      attendees, achieving a 93% positive feedback rate. Enhanced
+                      team collaboration and inclusivity, driving a 19% increase
+                      in event participation compared to previous years.
+                    </p>
+                  ),
+                  image1: "/SeniorOL1.jpg",
+                  image2: "/SeniorOL2.jpg",
+                },
+                {
+                  year: "Sept 2024 - Dec 2024",
+                  title: "Coding and Robotics Tutor",
+                  company: "Wize Computing Academy",
+                  content: (
+                    <p>
+                      Taught 10+ students aged 10–12 using Python and LEGO
+                      Education SPIKE Prime kits for hands-on coding and robotics
+                      projects. Sent regular individual progress reports to
+                      parents, fostering transparency and tracking improvements.
+                      Cultivated problem-solving and critical-thinking skills,
+                      enhancing students' confidence in technology and coding.
+                    </p>
+                  ),
+                  image1: "/Wize_Academy3.jpg",
+                  image2: "/Wize_Academy2.jpg",
+                },
+                {
+                  year: "Jun 2023 - Apr 2024",
+                  title: "Orientation Leader",
+                  company: "University of British Columbia",
+                  content: (
+                    <p>
+                      Led orientation groups of 15+ high school students,
+                      fostering a welcoming and inclusive community. Organized
+                      engaging activities that boosted student satisfaction by
+                      57%. Collaborated with peers and staff to deliver seamless
+                      events, strengthening communication and teamwork skills.
+                    </p>
+                  ),
+                  image1: "/OL1.jpg",
+                  image2: "/OL2.jpg",
+                },
+              ]}
+            />
+          </section>
+        </div>
 
         <section ref={SkillsRef}>
           {" "}
@@ -280,110 +373,62 @@ export default function Portfolio() {
             className="space-y-2 text-center"
           >
             <h2
-              className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl"
-              //onMouseEnter={(e) => (e.currentTarget.style.fontFamily = "'Cedarville Cursive', cursive")}
-              //onMouseLeave={(e) => (e.currentTarget.style.fontFamily = "Arial, sans-serif")}
-            >
-              Selected Projects
+                className="gradient-text text-3xl font-bold tracking-tighter sm:text-4xl mb-4"
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.fontFamily = "Arial, sans-serif")
+                }
+              >
+                Projects
             </h2>
-            <p className="text-muted-foreground">
-              A collection of projects I've worked on.
+            <p className="text-muted-foreground mx-auto max-w-2xl mb-16 pb-24">
+              Here's a collection of my recent work.
             </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {projects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className="group relative block bg-card/50 border border-border rounded-xl overflow-hidden transition-all duration-300"
+                >
+                  <div 
+                    className="absolute -inset-3 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none z-0"
+                    style={{
+                      boxShadow: `0 0 40px 15px ${project.promptColor || '#f43f5e'}, 0 0 80px 20px ${project.promptColor || '#f43f5e'}`,
+                      filter: `blur(8px)`,
+                    }}
+                  />
+                  <div className="aspect-video relative z-10">
+                    <Image src={project.imageUrl || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
+                  </div>
+                  <div className="p-6 relative z-10">
+                    <h2 className="text-xl font-semibold mb-2 text-foreground dark:text-foreground transition-colors duration-300"
+                      style={{
+                        color: 'inherit',
+                        transition: 'color 0.3s ease'
+                      }}
+                    >
+                      <span className="group-hover:text-transparent bg-clip-text bg-gradient-to-r transition-all duration-300"
+                        style={{
+                          backgroundImage: `linear-gradient(to right, ${project.promptColor || '#f43f5e'}, ${project.promptColor || '#f43f5e'})`,
+                        }}
+                      >
+                        {project.title}
+                      </span>
+                    </h2>
+                    <p className="text-muted-foreground mb-4">{project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech) => (
+                        <span key={tech} className="px-4 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-xs font-medium text-gray-800 dark:text-gray-200">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </motion.div>
-          <div className="mt-8">
-            <CaseStudyList
-              cases={[
-                {
-                  title: "Seelie – Banking the GenZ Way",
-                  description:
-                    "A user-centric financial management app tailored for Gen Z, providing interactive tools for expense tracking, savings visualization, and financial literacy.",
-                  image: "/seelie.png",
-                  challenge:
-                    "Many young users struggle with understanding financial concepts, leading to poor money management habits.",
-                  challengeImage: "/Seelie_challenge.jpg",
-                  solution: "",
-                  solutionImage: "/placeholder.svg",
-                  result:
-                    "Improved financial awareness among users through a combination of data-driven insights and engaging educational content.",
-                  resultImage: "/Seelie_result.jpg",
-                  beforeImage: "",
-                  afterImage: "/placeholder.svg",
-                  researchImage1: "/Seelie_research1.jpg",
-                  researchImage2: "/Seelie_research2.jpg",
-                  researchDescription:
-                    "Conducted user research with surveys and interviews to identify key pain points. Designed an interactive prototype in Figma with financial tools such as expense categorization, savings tracking, and financial literacy videos.",
-                  tags: [
-                    "UX Design",
-                    "Financial Literacy",
-                    "Figma",
-                    "User Research",
-                    "Prototyping",
-                    "FinTech",
-                  ],
-                  link: "https://www.figma.com/proto/JST0SgsTdy6QnmFKtuA3c0/App-Design?node-id=20-9&t=1WSiAQHF0OU7TS85-1&starting-point-node-id=20%3A9",
-                },
-                {
-                  title: "RecoverEase – Lost and Found Management System",
-                  description:
-                    "A full-stack web application designed to streamline lost-and-found item tracking for university campuses.",
-                  image: "/RecoverEase.jpg",
-                  challenge:
-                    "Traditional lost-and-found systems were inefficient, relying on manual tracking methods that led to frequent delays, misplaced items, and a lack of transparency in the process. University staff struggled to manage high volumes of lost items effectively, and students found it difficult to retrieve their belongings in a timely manner.",
-                  challengeImage: "",
-                  solution:
-                    "Built using Node.js, Express.js, Oracle RDBMS, HTML, CSS, and JavaScript to optimize item management. Implemented complex Oracle SQL queries supporting real-time search, aggregation, and nested grouping for better data handling.",
-                  solutionImage: "",
-                  result:
-                    "RecoverEase significantly improved operational efficiency by automating item categorization and retrieval processes. The real-time search functionality reduced item recovery time by 40%, while automated statistical reporting provided valuable insights into lost-and-found trends. Users reported a smoother experience, reducing frustration and increasing satisfaction with the system.",
-                  resultImage: "",
-                  beforeImage: "",
-                  afterImage: "/placeholder.svg",
-                  researchImage1: "",
-                  researchImage2: "",
-                  researchDescription: "",
-                  tags: [
-                    "Node.js",
-                    "Express.js",
-                    "JavaScript",
-                    "Oracle RDBMS",
-                    "SQL",
-                    "Full-Stack Development",
-                    "Web Development",
-                  ],
-                  link: "https://github.com/heralk21/RecoverEase",
-                },
-                {
-                  title: "Predicting Risk of a Heart Attack",
-                  description:
-                    "A machine learning model designed to predict heart attack risk based on large health datasets.",
-                  image: "/HeartRisk.jpg",
-                  challenge:
-                    "Heart disease remains one of the leading causes of death worldwide, yet early risk detection is often challenging due to the complexity of medical data. Healthcare providers needed an efficient, data-driven approach to analyze large volumes of patient records, identify high-risk individuals, and provide timely interventions. Traditional diagnostic methods were time-consuming and sometimes lacked predictive accuracy.",
-                  challengeImage: "",
-                  solution:
-                    "Developed a predictive model in R with 77% accuracy, processing and normalizing 10,000+ rows of health data. Utilized tidyverse, tidymodels, and ggplot2 for data analysis and visualization, incorporating feature engineering and exploratory data analysis (EDA) to enhance predictive performance.",
-                  solutionImage: "",
-                  result:
-                    "The model successfully provided healthcare professionals with actionable insights, allowing for early intervention and better patient care. By identifying key risk factors, the system helped prioritize high-risk individuals, improving efficiency in heart disease prevention strategies. Visualizations generated from the data allowed for easier interpretation and understanding, making the insights more accessible to medical professionals.",
-                  resultImage: "",
-                  beforeImage: "",
-                  afterImage: "/placeholder.svg",
-                  researchImage1: "",
-                  researchImage2: "",
-                  researchDescription: "",
-                  tags: [
-                    "R",
-                    "Machine Learning",
-                    "Data Science",
-                    "Predictive Analytics",
-                    "Healthcare",
-                    "Data Visualization",
-                  ],
-                  link: "https://github.com/heralk21/Heart-Attack-Risk-Predictor---DSCI-Project",
-                },
-              ]}
-            />
-          </div>
         </section>
 
         <section ref={contactRef} className="relative py-24 lg:py-32">
