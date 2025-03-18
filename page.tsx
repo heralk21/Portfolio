@@ -217,7 +217,7 @@ export default function Portfolio() {
       </header>
 
       <main className="container pt-24">
-        <section ref={aboutRef} className="py-10">
+        <section ref={aboutRef} className="py-10 lg:py-24">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -294,7 +294,7 @@ export default function Portfolio() {
         </section>
 
         <div ref={experienceRef} className="min-h-screen">
-          <section className="py-24 lg:py-32">
+          <section className="py-18 lg:py-28">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -393,7 +393,7 @@ export default function Portfolio() {
           <SkillsSection />
         </section>
 
-        <section ref={workRef} className="py-24 lg:py-32">
+        <section ref={workRef} className="py-18 lg:py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
