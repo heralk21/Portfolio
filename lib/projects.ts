@@ -62,68 +62,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "Melo",
-    title: "Melo",
-    tagline: "Fresh choices, zero waste",
-    description: "An e-commerce app designed to help people shop sustainably, minimizing food and packaging waste",
-    fullDescription:
-      "Melo is an innovative e-commerce platform addressing the challenges of sustainable shopping and food waste reduction. In an era where environmental consciousness is crucial, Melo helps users plan purchases efficiently, track expiration dates, and discover creative ways to repurpose items before they go bad.\n\nThe project is driven by extensive user research and iterative testing, focusing on practical solutions that fit seamlessly into daily life. With intuitive tracking tools and AI-powered suggestions, Melo aims to make sustainable shopping accessible and enjoyable.",
-    technologies: ["Figma", "FigJam", "Canva"],
-    imageUrl: "/melo/melo.png", // Update with actual image later
-    heroImage: "/melo/melo.png", // Update with actual image later
-    role: "UI/UX Designer",
-    timeline: "Feb 2025 - ongoing",
-    team: "Solo project",
-    readTime: 8,
-    problemStatement:
-      "How might we design an app that helps people shop sustainably, minimizing food and packaging waste by assisting users in planning purchases, tracking expiration dates, and suggesting ways to repurpose items before they go bad?",
-    solution:
-      "My solution is to build an intuitive e-commerce app that transforms sustainable shopping into a user-friendly experience. Melo provides smart inventory tracking with expiration alerts, AI-powered recipe suggestions based on available ingredients, and personalized shopping recommendations that minimize waste while maximizing value.",
-    designProcess: [
-      {
-        title: "Discover",
-        description: "🚧 Under Development 🚧",
-        image: "",
-      },
-      {
-        title: "Define",
-        description: "🚧 Under Development 🚧",
-        image: "",
-      },
-      {
-        title: "Develop",
-        description: "🚧 Under Development 🚧",
-        image: "",
-      },
-      {
-        title: "Deliver",
-        description: "🚧 Under Development 🚧",
-        image: "",
-      },
-    ],
-    reflection: "🚧 Under Development 🚧",
-    teamMembers: [
-      {
-        name: "Heral Kumar",
-        role: "UI/UX Designer",
-        link: "https://www.linkedin.com/in/heral-kumar/",
-      }
-    ],
-    promptColor: "#FA5C5C",
-    promptTextColor: "#FA5C5C",
-    areaOfFocus: "E-commerce",
-    challengeMetrics: [
-      { number: "33%", label: "of food produced globally goes to waste annually" },
-      { number: "61%", label: "of consumers want to reduce their environmental impact" },
-      { number: "40%", label: "of food waste occurs at the consumer level" }
-    ],
-    resultMetrics: [
-      { number: "🚧", label: "Project in progress" },
-      { number: "🚧", label: "Project in progress" },
-      { number: "🚧", label: "Project in progress" }
-    ]
-  },
-  {
     slug: "Seelie",
     title: "Seelie",
     tagline: "Banking the GenZ way",
@@ -238,6 +176,68 @@ export const projects: Project[] = [
       { number: "94%", label: "of test users would recommend the app" },
       { number: "32%", label: "increase in daily financial planning activity" },
       { number: "9.2/10", label: "average user experience rating" }
+    ]
+  },
+  {
+    slug: "Melo",
+    title: "Melo",
+    tagline: "Fresh choices, zero waste",
+    description: "An e-commerce app designed to help people shop sustainably, minimizing food and packaging waste",
+    fullDescription:
+      "Melo is an innovative e-commerce platform addressing the challenges of sustainable shopping and food waste reduction. In an era where environmental consciousness is crucial, Melo helps users plan purchases efficiently, track expiration dates, and discover creative ways to repurpose items before they go bad.\n\nThe project is driven by extensive user research and iterative testing, focusing on practical solutions that fit seamlessly into daily life. With intuitive tracking tools and AI-powered suggestions, Melo aims to make sustainable shopping accessible and enjoyable.",
+    technologies: ["Figma", "FigJam", "Canva"],
+    imageUrl: "/melo/melo.png", // Update with actual image later
+    heroImage: "/melo/melo.png", // Update with actual image later
+    role: "UI/UX Designer",
+    timeline: "Feb 2025 - ongoing",
+    team: "Solo project",
+    readTime: 8,
+    problemStatement:
+      "How might we design an app that helps people shop sustainably, minimizing food and packaging waste by assisting users in planning purchases, tracking expiration dates, and suggesting ways to repurpose items before they go bad?",
+    solution:
+      "My solution is to build an intuitive e-commerce app that transforms sustainable shopping into a user-friendly experience. Melo provides smart inventory tracking with expiration alerts, AI-powered recipe suggestions based on available ingredients, and personalized shopping recommendations that minimize waste while maximizing value.",
+    designProcess: [
+      {
+        title: "Discover",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+      {
+        title: "Define",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+      {
+        title: "Develop",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+      {
+        title: "Deliver",
+        description: "🚧 Under Development 🚧",
+        image: "",
+      },
+    ],
+    reflection: "🚧 Under Development 🚧",
+    teamMembers: [
+      {
+        name: "Heral Kumar",
+        role: "UI/UX Designer",
+        link: "https://www.linkedin.com/in/heral-kumar/",
+      }
+    ],
+    promptColor: "#FA5C5C",
+    promptTextColor: "#FA5C5C",
+    areaOfFocus: "E-commerce",
+    challengeMetrics: [
+      { number: "33%", label: "of food produced globally goes to waste annually" },
+      { number: "61%", label: "of consumers want to reduce their environmental impact" },
+      { number: "40%", label: "of food waste occurs at the consumer level" }
+    ],
+    resultMetrics: [
+      { number: "🚧", label: "Project in progress" },
+      { number: "🚧", label: "Project in progress" },
+      { number: "🚧", label: "Project in progress" }
     ]
   },
   {
