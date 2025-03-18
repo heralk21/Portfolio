@@ -13,9 +13,41 @@ import { ThemeToggle } from "../../components/shared/theme-switcher"
 import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
 
-// Dynamically import the charts component to avoid SSR issues with Recharts
+// Dynamically import the charts components to avoid SSR issues with Recharts
 const SeelieResearchCharts = dynamic(
   () => import('../../components/charts/SeelieResearchCharts'),
+  { ssr: false }
+)
+
+const HeartRiskResearchCharts = dynamic(
+  () => import('../../components/charts/HeartRiskResearchCharts'),
+  { ssr: false }
+)
+
+const RecoverEaseResearchCharts = dynamic(
+  () => import('../../components/charts/RecoverEaseResearchCharts'),
+  { ssr: false }
+)
+
+// Dynamically import the personas components
+const HeartRiskPersonas = dynamic(
+  () => import('../../components/personas/HeartRiskPersonas'),
+  { ssr: false }
+)
+
+const RecoverEasePersonas = dynamic(
+  () => import('../../components/personas/RecoverEasePersonas'),
+  { ssr: false }
+)
+
+// Dynamically import the competitive analysis components
+const HeartRiskCompetitiveAnalysis = dynamic(
+  () => import('../../components/analysis/HeartRiskCompetitiveAnalysis'),
+  { ssr: false }
+)
+
+const RecoverEaseCompetitiveAnalysis = dynamic(
+  () => import('../../components/analysis/RecoverEaseCompetitiveAnalysis'),
   { ssr: false }
 )
 
@@ -36,17 +68,6 @@ interface TeamMember {
   link?: string
 }
 
-const sections = [
-  { id: "overview", label: "Overview" },
-  { id: "challenge", label: "Challenge" },
-  { id: "research", label: "Research" },
-  { id: "process", label: "Process" },
-  { id: "solution", label: "Solution" },
-  { id: "results", label: "Results" },
-  { id: "reflection", label: "Reflection" },
-  { id: "team", label: "Team" }
-]
-
 const menuItems = [
   { label: "About", path: "about" },
   { label: "Experience", path: "experience" },
@@ -54,6 +75,56 @@ const menuItems = [
   { label: "Work", path: "work" },
   { label: "Contact", path: "contact" },
 ]
+
+// Create function to get project-specific sections
+const getProjectSections = (projectSlug: string) => {
+  // Default sections for most projects
+  const defaultSections = [
+    { id: "overview", label: "Overview" },
+    { id: "challenge", label: "Challenge" },
+    { id: "process", label: "Process" },
+    { id: "solution", label: "Solution" },
+    { id: "results", label: "Results" },
+    { id: "reflection", label: "Reflection" },
+    { id: "team", label: "Team" }
+  ];
+  
+  // Project-specific sections
+  switch(projectSlug) {
+    case "HeartRisk":
+      return [
+        { id: "overview", label: "Overview" },
+        { id: "challenge", label: "Challenge" },
+        { id: "process", label: "Design Process" },
+        { id: "solution", label: "AI Solution" },
+        { id: "results", label: "Outcomes" },
+        { id: "reflection", label: "Future Work" },
+        { id: "team", label: "Team" }
+      ];
+    case "RecoverEase":
+      return [
+        { id: "overview", label: "Overview" },
+        { id: "challenge", label: "Challenge" },
+        { id: "process", label: "Design Process" },
+        { id: "solution", label: "System Solution" },
+        { id: "results", label: "Implementation Results" },
+        { id: "reflection", label: "Roadmap" },
+        { id: "team", label: "Team" }
+      ];
+    case "Seelie":
+      return [
+        { id: "overview", label: "Overview" },
+        { id: "challenge", label: "Challenge" },
+        { id: "process", label: "Design Process" },
+        { id: "solution", label: "Solution" },
+        { id: "results", label: "Results" },
+        { id: "reflection", label: "Improvements" },
+        { id: "team", label: "Team" }
+      ];
+    default:
+      return defaultSections;
+  }
+};
 
 // Create a component for area of focus with animation
 const FocusArea = ({ text, color = "#f43f5e" }: { 
@@ -538,7 +609,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sections.map(section => ({
+      const sectionElements = getProjectSections(params.slug).map(section => ({
         id: section.id,
         element: document.getElementById(section.id)
       }))
@@ -556,7 +627,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [params.slug])
 
   if (loading) {
     return (
@@ -733,14 +804,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                       color={project.promptColor || "#f43f5e"}
                     />
                   </div>
-                ) : project.slug === "Seelie" && (
-                  <div className="mb-8">
-                    <FocusArea 
-                      text="FinTech"
-                      color={project.promptColor || "#f43f5e"}
-                    />
-                  </div>
-                )}
+                ) : null}
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   {project.challengeMetrics?.map((metric, index) => (
@@ -864,6 +928,10 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                           <h2 className="text-xl font-semibold mt-8 mb-4">User Research</h2>
                               {project.slug === "Seelie" ? (
                                 <SeelieResearchCharts promptColor={project.promptColor || "#53b948"} />
+                              ) : project.slug === "HeartRisk" ? (
+                                <HeartRiskResearchCharts promptColor={project.promptColor || "#e11d48"} />
+                              ) : project.slug === "RecoverEase" ? (
+                                <RecoverEaseResearchCharts promptColor={project.promptColor || "#0891b2"} />
                               ) : (
                                 <div className="grid md:grid-cols-2 gap-8">
                                   {project.researchImages?.map((image, index) => (
@@ -895,56 +963,82 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
                             <h3 className="text-xl font-semibold mt-8 mb-4">User Personas</h3>
                             <div className="space-y-8 mt-6">
-                              <UserPersonaCard
-                                name="Maya Tanaka"
-                                subtitle="International Student"
-                                age={20}
-                                location="Toronto, Canada (originally from Japan)"
-                                occupation="Business Administration Student"
-                                painPoints={[
-                                  "Struggles with understanding the Canadian banking system (credit scores, loans, budgeting).",
-                                  "Feels overwhelmed managing multiple expenses (tuition, rent, groceries).",
-                                  "Prefers digital solutions over traditional banking but finds it hard to trust finance apps.",
-                                  "Wants reminders for bills & subscription renewals to avoid unexpected charges."
-                                ]}
-                                goals={[
-                                  "Learn and navigate Canadian banking easily.",
-                                  "Have a personalized assistant to help with finance-related questions.",
-                                  "Track expenses, savings, and avoid overdraft fees."
-                                ]}
-                                imageUrl="/user personas - seelie/seelie-person1.jpg"
-                                color={project.promptColor}
-                              />
-                              
-                              <UserPersonaCard
-                                name="Jordan Smith"
-                                subtitle="Forgetful Freelancer"
-                                age={22}
-                                location="Vancouver, Canada"
-                                occupation="Part-time content creator, freelance graphic designer"
-                                painPoints={[
-                                  "Juggles multiple gigs and irregular income but forgets to save money.",
-                                  "Loses track of subscription payments (Spotify, Adobe, gym, Netflix, etc.).",
-                                  "Has mild ADHD, making task management difficult.",
-                                  "Finds traditional banking apps too complicated and boring."
-                                ]}
-                                goals={[
-                                  "Use Seelie as a \"gentle assistant\" to remind him about financial goals.",
-                                  "Get smart, friendly spending insights without overwhelming data.",
-                                  "Set non-intrusive reminders for upcoming payments."
-                                ]}
-                                imageUrl="/user personas - seelie/seelie-person2.jpg"
-                                color={project.promptColor}
-                />
-              </div>
+                              {project.slug === "HeartRisk" ? (
+                                <HeartRiskPersonas promptColor={project.promptColor} />
+                              ) : project.slug === "RecoverEase" ? (
+                                <RecoverEasePersonas promptColor={project.promptColor} />
+                              ) : project.slug === "Seelie" ? (
+                                <>
+                                  <UserPersonaCard
+                                    name="Maya Tanaka"
+                                    subtitle="International Student"
+                                    age={20}
+                                    location="Toronto, Canada (originally from Japan)"
+                                    occupation="Business Administration Student"
+                                    painPoints={[
+                                      "Struggles with understanding the Canadian banking system (credit scores, loans, budgeting).",
+                                      "Feels overwhelmed managing multiple expenses (tuition, rent, groceries).",
+                                      "Prefers digital solutions over traditional banking but finds it hard to trust finance apps.",
+                                      "Wants reminders for bills & subscription renewals to avoid unexpected charges."
+                                    ]}
+                                    goals={[
+                                      "Learn and navigate Canadian banking easily.",
+                                      "Have a personalized assistant to help with finance-related questions.",
+                                      "Track expenses, savings, and avoid overdraft fees."
+                                    ]}
+                                    imageUrl="/user personas - seelie/seelie-person1.jpg"
+                                    color={project.promptColor}
+                                  />
+                                  
+                                  <UserPersonaCard
+                                    name="Jordan Smith"
+                                    subtitle="Forgetful Freelancer"
+                                    age={22}
+                                    location="Vancouver, Canada"
+                                    occupation="Part-time content creator, freelance graphic designer"
+                                    painPoints={[
+                                      "Juggles multiple gigs and irregular income but forgets to save money.",
+                                      "Loses track of subscription payments (Spotify, Adobe, gym, Netflix, etc.).",
+                                      "Has mild ADHD, making task management difficult.",
+                                      "Finds traditional banking apps too complicated and boring."
+                                    ]}
+                                    goals={[
+                                      "Use Seelie as a \"gentle assistant\" to remind him about financial goals.",
+                                      "Get smart, friendly spending insights without overwhelming data.",
+                                      "Set non-intrusive reminders for upcoming payments."
+                                    ]}
+                                    imageUrl="/user personas - seelie/seelie-person2.jpg"
+                                    color={project.promptColor}
+                                  />
+                                </>
+                              ) : null}
+                            </div>
 
                             {/* Add Competitive Analysis Table here, right after User Personas */}
-                            <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
-                            <CompetitiveAnalysisTable promptColor={project.promptColor} />
+                            {project.slug === "Seelie" && (
+                              <>
+                                <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
+                                <CompetitiveAnalysisTable promptColor={project.promptColor} />
+                              </>
+                            )}
+                            
+                            {project.slug === "HeartRisk" && (
+                              <>
+                                <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
+                                <HeartRiskCompetitiveAnalysis promptColor={project.promptColor} />
+                              </>
+                            )}
+                            
+                            {project.slug === "RecoverEase" && (
+                              <>
+                                <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
+                                <RecoverEaseCompetitiveAnalysis promptColor={project.promptColor} />
+                              </>
+                            )}
 
                             {step.image && (
                               <FadeInImage
-                                src={step.image || "/placeholder.svg"}
+                                src={step.image}
                                 alt={step.title}
                                 width={1200}
                                 height={800}
@@ -960,17 +1054,29 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                               ))}
                             </div>
                             
-                            {/* Replace image with looping video */}
-                            <FadeInVideo 
-                              src="/seelie-video.mp4" 
-                              className="my-6 aspect-video"
-                            />
-                            <p 
-                              className="text-center text-lg mt-4 font-medium"
-                              style={{ color: project.promptColor || "#53b948" }}
-                            >
-                              Check out this video, highlighting my favourite and most GenZ feature of Seelie!
-                            </p>
+                            {/* Project-specific content for Deliver step */}
+                            {project.slug === "Seelie" ? (
+                              <>
+                                <FadeInVideo 
+                                  src="/seelie-video.mp4" 
+                                  className="my-6 aspect-video"
+                                />
+                                <p 
+                                  className="text-center text-lg mt-4 font-medium"
+                                  style={{ color: project.promptColor || "#53b948" }}
+                                >
+                                  Check out this video, highlighting my favourite and most GenZ feature of Seelie!
+                                </p>
+                              </>
+                            ) : step.image ? (
+                              <FadeInImage
+                                src={step.image}
+                                alt={step.title}
+                                width={1200}
+                                height={800}
+                                className="rounded-xl overflow-hidden my-6"
+                              />
+                            ) : null}
                           </>
                         ) : (
                           <>
@@ -1005,7 +1111,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                     </div>
                     {step.image && (
                           <FadeInImage
-                          src={step.image || "/placeholder.svg"}
+                          src={step.image}
                           alt={step.title}
                           width={1200}
                           height={800}
@@ -1020,36 +1126,11 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
               {/* Solution Section */}
               <section id="solution" className="space-y-8 mb-16">
-                <h2 className="text-2xl font-bold">Solution</h2>
-                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                  {project.solutionMetrics?.map((metric, index) => (
-                    <MetricNumber 
-                      key={index}
-                      number={metric.number}
-                      label={metric.label}
-                      color="#facc15" // Using yellow to match the light bulb
-                    />
-                  ))}
-                  {!project.solutionMetrics && (
-                    <>
-                      <MetricNumber 
-                        number="92%"
-                        label="user satisfaction in prototype testing"
-                        color="#facc15"
-                      />
-                      <MetricNumber 
-                        number="4.5x"
-                        label="increase in financial knowledge retention"
-                        color="#facc15"
-                      />
-                      <MetricNumber 
-                        number="87%"
-                        label="of users found budgeting tools intuitive"
-                        color="#facc15"
-                      />
-                    </>
-                  )}
-                </div> */}
+                <h2 className="text-2xl font-bold">
+                  {project.slug === "HeartRisk" ? "AI Solution" : 
+                   project.slug === "RecoverEase" ? "System Solution" : 
+                   "Solution"}
+                </h2>
                 <div className="relative p-6 rounded-lg border bg-card/30 backdrop-blur-sm group transition-all duration-300">
                   <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
                     style={{
@@ -1078,7 +1159,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                       {project.solutionImages.map((image, index) => (
                         <FadeInImage
                           key={index}
-                          src={image || "/placeholder.svg"}
+                          src={image}
                           alt={`Solution ${index + 1}`}
                           fill
                           className="aspect-video relative rounded-lg overflow-hidden border"
@@ -1125,14 +1206,18 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
               {/* Results Section */}
               <section id="results" className="space-y-8 mb-16">
-                <h2 className="text-2xl font-bold">Results</h2>
+                <h2 className="text-2xl font-bold">
+                  {project.slug === "HeartRisk" ? "Outcomes" : 
+                   project.slug === "RecoverEase" ? "Implementation Results" : 
+                   "Results"}
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   {project.resultMetrics?.map((metric, index) => (
                     <MetricNumber 
                       key={index}
                       number={metric.number}
                       label={metric.label}
-                      color="#3b82f6" // Blue for results
+                      color={project.promptColor || "#f43f5e"}
                     />
                   ))}
                   {!project.resultMetrics && (
@@ -1171,7 +1256,11 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               {/* Reflection Section */}
             {project.reflection && (
                 <section id="reflection" className="space-y-8 mb-16">
-                  <h2 className="text-2xl font-bold">Improvements & Next Steps</h2>
+                  <h2 className="text-2xl font-bold">
+                    {project.slug === "HeartRisk" ? "Future Work" : 
+                     project.slug === "RecoverEase" ? "Roadmap" : 
+                     "Improvements & Next Steps"}
+                  </h2>
                   <div className="space-y-8 max-w-none">
                     {project.reflection.split("\n\n").map((item, idx) => {
                       // Check if item contains a title (the first line before a newline)
@@ -1211,6 +1300,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary hover:underline inline-flex items-center"
+                          style={{ color: project.promptColor || '#f43f5e' }}
                         >
                           View Profile <ChevronRight className="w-4 h-4 ml-1" />
                         </a>
@@ -1244,118 +1334,25 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                     }
                   `}</style>
                 <nav className="space-y-2">
-                    <a 
-                      href="#overview" 
-                      onClick={(e) => handleSmoothScroll(e, "overview")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "overview" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "overview" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                    Overview
-                  </a>
-                    <a 
-                      href="#challenge" 
-                      onClick={(e) => handleSmoothScroll(e, "challenge")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "challenge" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "challenge" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                      Challenge
-                    </a>
-                    <a 
-                      href="#process" 
-                      onClick={(e) => handleSmoothScroll(e, "process")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "process" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "process" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                    Design Process
-                  </a>
-                    <a 
-                      href="#solution" 
-                      onClick={(e) => handleSmoothScroll(e, "solution")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "solution" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "solution" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                      Solution
-                    </a>
-                    <a 
-                      href="#results" 
-                      onClick={(e) => handleSmoothScroll(e, "results")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "results" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "results" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                      Results
-                    </a>
-                    <a 
-                      href="#reflection" 
-                      onClick={(e) => handleSmoothScroll(e, "reflection")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "reflection" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "reflection" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                      Improvements
-                    </a>
-                    <a 
-                      href="#team" 
-                      onClick={(e) => handleSmoothScroll(e, "team")}
-                      className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
-                        activeSection === "team" 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground"
-                      }`}
-                      style={{
-                        color: activeSection === "team" 
-                          ? project.promptColor || undefined
-                          : undefined
-                      }}
-                    >
-                      Team
-                    </a>
+                    {getProjectSections(params.slug).map((section) => (
+                      <a 
+                        key={section.id}
+                        href={`#${section.id}`}
+                        onClick={(e) => handleSmoothScroll(e, section.id)}
+                        className={`block text-sm font-medium transition-all duration-300 ease-in-out py-1 nav-link ${
+                          activeSection === section.id 
+                            ? "text-primary font-semibold" 
+                            : "text-muted-foreground"
+                        }`}
+                        style={{
+                          color: activeSection === section.id 
+                            ? project.promptColor || undefined
+                            : undefined
+                        }}
+                      >
+                        {section.label}
+                      </a>
+                    ))}
                 </nav>
               </div>
 
