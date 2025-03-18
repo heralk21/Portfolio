@@ -54,6 +54,10 @@ export type Project = {
   challengeMetrics?: Metric[]
   solutionMetrics?: Metric[]
   resultMetrics?: Metric[]
+  researchImages?: string[]
+  solutionImages?: string[]
+  solutionColor?: string
+  results?: { title: string; description: string }[]
 }
 
 export const projects: Project[] = [
@@ -389,5 +393,18 @@ export function getProjectBySlug(slug: string) {
 
 export function getAllProjectSlugs() {
   return projects.map((project) => project.slug)
+}
+
+// Add getProjectData function for async data fetching
+export async function getProjectData(slug: string): Promise<Project | null> {
+  try {
+    // Get the project data synchronously
+    const project = getProjectBySlug(slug);
+    // Return the project data or null if not found
+    return project || null;
+  } catch (error) {
+    console.error("Error fetching project data:", error);
+    return null;
+  }
 }
 
