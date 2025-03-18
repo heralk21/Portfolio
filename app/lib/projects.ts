@@ -1,6 +1,6 @@
 'use server'
 
-import { getProjectBySlug } from './projects'
+import { getProjectBySlug } from '@/lib/projects'
 
 export async function getProjectData(slug: string) {
   const project = getProjectBySlug(slug)

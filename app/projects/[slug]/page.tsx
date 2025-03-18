@@ -1,12 +1,11 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { notFound } from "next/navigation"
+import { notFound, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ExternalLink, Github, ChevronRight, Menu, X, Lightbulb } from "lucide-react"
-import { getProjectBySlug } from "@/lib/projects"
-import type { Project } from "../../../lib/types"
+import { getProjectData, Project } from "@/lib/projects"
 import { motion, useInView } from "framer-motion"
 import Logo from "../../components/shared/site-logo"
 import { ThemeToggle } from "../../components/shared/theme-switcher"
@@ -593,19 +592,29 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isHeaderFixed, setIsHeaderFixed] = useState(false)
   const [figmaLoading, setFigmaLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchProject = async () => {
-      const projectData = await getProjectBySlug(params.slug)
-      if (!projectData) {
-        notFound()
+      try {
+        const projectData = await getProjectData(params.slug)
+        
+        if (!projectData) {
+          console.error("Project not found:", params.slug)
+          router.push('/404')
+          return
+        }
+        
+        setProject(projectData)
+        setLoading(false)
+      } catch (error) {
+        console.error("Error fetching project:", error)
+        router.push('/404')
       }
-      setProject(projectData as Project)
-      setLoading(false)
     }
 
     fetchProject()
-  }, [params.slug])
+  }, [params.slug, router])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1012,7 +1021,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                                   />
                                 </>
                               ) : null}
-                            </div>
+              </div>
 
                             {/* Add Competitive Analysis Table here, right after User Personas */}
                             {project.slug === "Seelie" && (
@@ -1052,7 +1061,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                               {step.description.split("\n\n").map((paragraph: string, idx: number) => (
                                 <p key={idx}>{paragraph}</p>
                               ))}
-                            </div>
+                    </div>
                             
                             {/* Project-specific content for Deliver step */}
                             {project.slug === "Seelie" ? (
@@ -1164,8 +1173,8 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                           fill
                           className="aspect-video relative rounded-lg overflow-hidden border"
                         />
-                      ))}
-                    </div>
+                  ))}
+                </div>
                   )}
                 </div>
                 

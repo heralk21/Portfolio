@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -38,12 +38,42 @@ const dancingScript = Dancing_Script({
 //   variable: "--font-cedarville",
 // })
 
+// Client-side component that safely uses useSearchParams
+function ClientSideNavigation({ 
+  menuItems, 
+  setIsScrolling, 
+  setActiveSection,
+  updateURL
+}: { 
+  menuItems: any[],
+  setIsScrolling: (value: boolean) => void,
+  setActiveSection: (value: string) => void,
+  updateURL: (path: string) => void
+}) {
+  const searchParams = useSearchParams();
+  
+  // Handle initial section scroll from URL
+  useEffect(() => {
+    const section = searchParams?.get('section');
+    if (section) {
+      const menuItem = menuItems.find(item => item.path === section);
+      if (menuItem?.ref.current) {
+        setIsScrolling(true);
+        menuItem.ref.current.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(section);
+        setTimeout(() => setIsScrolling(false), 1000);
+      }
+    }
+  }, [searchParams, menuItems, setActiveSection, setIsScrolling]);
+  
+  return null;
+}
+
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isScrolling, setIsScrolling] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const aboutRef = useRef<HTMLDivElement>(null);
   const experienceRef = useRef<HTMLDivElement>(null);
   const SkillsRef = useRef<HTMLDivElement>(null);
@@ -60,20 +90,6 @@ export default function Portfolio() {
     { label: "Work", ref: workRef, path: "work" },
     { label: "Contact", ref: contactRef, path: "contact" },
   ];
-
-  // Handle initial section scroll from URL
-  useEffect(() => {
-    const section = searchParams.get('section');
-    if (section) {
-      const menuItem = menuItems.find(item => item.path === section);
-      if (menuItem?.ref.current) {
-        setIsScrolling(true);
-        menuItem.ref.current.scrollIntoView({ behavior: "smooth" });
-        setActiveSection(section);
-        setTimeout(() => setIsScrolling(false), 1000);
-      }
-    }
-  }, [searchParams]);
 
   // Debounced URL update
   const updateURL = useCallback((path: string) => {
@@ -144,7 +160,18 @@ export default function Portfolio() {
 
   return (
     <div className={`min-h-screen bg-background ${dancingScript.variable}`}>
+      {/* Wrap the component that uses useSearchParams in Suspense */}
+      <Suspense fallback={null}>
+        <ClientSideNavigation 
+          menuItems={menuItems} 
+          setIsScrolling={setIsScrolling} 
+          setActiveSection={setActiveSection}
+          updateURL={updateURL}
+        />
+      </Suspense>
+      
       <div className="fixed inset-0 bg-gradient-radial from-rose-100/30 via-background to-background dark:from-rose-950/30 -z-10" />
+      
       <header className="fixed top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
         <nav className="container flex h-16 items-center justify-between">
           <Logo />
