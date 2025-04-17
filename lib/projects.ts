@@ -61,6 +61,118 @@ export type Project = {
 }
 
 export const projects: Project[] = [
+  // {
+  //   slug: "tamago",
+  //   title: "TamaGo",
+  //   tagline: "Bridging Art and Real-World Engagement",
+  //   description: "An app that transforms physical spaces into interactive art hubs to connect local audiences with artists.",
+  //   fullDescription:
+  //     "TamaGo is a mobile application designed to break the cycle of passive art consumption by enabling real-world engagement. By leveraging location-based storytelling, interactive exhibitions, and gamified experiences, TamaGo transforms everyday spaces into dynamic art trails. Developed by a team of David, Heral, and Yuna as part of UX Laurier 2025, the project aims to empower local artists and create a deeper connection between creators and audiences.",
+  //   technologies: ["Figma", "FigJam", "Canva"],
+  //   imageUrl: "/placeholder.svg",
+  //   heroImage: "/placeholder.svg",
+  //   liveUrl: "https://www.figma.com/proto/TamaGoPrototype?node-id=10-1",
+  //   //githubUrl: "https://github.com/username/tamago",
+  //   featured: true,
+  //   role: "UI/UX Designer",
+  //   timeline: "Mar 2025 - Apr 2025",
+  //   team: "Team of 3",
+  //   readTime: 10,
+  //   award: "UX Laurier 2025 Finalist",
+  //   introduction:
+  //     "Art and technology collide to create meaningful local connections. While digital platforms often encourage passive consumption, TamaGo reimagines art discovery by turning physical spaces into interactive engagement hubs. This project was built to empower local communities and foster authentic interactions with art.",
+  //   overview:
+  //     "TamaGo is a mobile app that bridges the gap between local art and community engagement. It enables users to discover local artists through immersive, real-world experiences and interactive storytelling. With features like geotagged art trails and live event integrations, TamaGo challenges the conventional digital art feed, inviting users to actively participate and connect.",
+  //   problemStatement:
+  //     "How might we connect technology with physical spaces to enable audiences to discover local artists and actively engage with artworks in person, rather than remaining passive consumers?",
+  //   solution:
+  //     "Our solution transforms passive art consumption into an active, engaging experience. For artists, TamaGo offers tools to bypass algorithm-driven feeds through interactive exhibitions and geotagged promotions. For users, it creates immersive discovery journeys that turn everyday locations into curated art trails, complete with interactive storytelling and real-world incentives.",
+  //   solutionImage: "/tamago_result.jpg",
+  //   figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/TamaGoPrototype?node-id=10-1",
+  //   prototypeImages: [
+  //     {
+  //       src: "/placeholder.svg?height=600&width=800",
+  //       alt: "Home screen showing art discovery map"
+  //     },
+  //     {
+  //       src: "/placeholder.svg?height=600&width=800",
+  //       alt: "Interactive art trail with location-based prompts"
+  //     },
+  //     {
+  //       src: "/placeholder.svg?height=600&width=800",
+  //       alt: "Artist profile screen with exhibition details"
+  //     },
+  //     {
+  //       src: "/placeholder.svg?height=600&width=800",
+  //       alt: "User engagement screen highlighting event participation"
+  //     }
+  //   ],
+  //   designProcess: [
+  //     {
+  //       title: "Discover",
+  //       description:
+  //         "User Research – Interviews with both artists and audiences revealed that digital platforms foster passive consumption. Artists struggle to reach niche audiences while users feel disconnected from local creative scenes.\n\nCompetitive Analysis – We analyzed existing platforms and identified a gap in enabling real-world art engagement through technology.",
+  //       image: "/placeholder.svg"
+  //     },
+  //     {
+  //       title: "Define",
+  //       description:
+  //         "Persona Development – We created detailed personas representing local art enthusiasts and emerging artists to better understand their needs and pain points.\n\nProblem Framing – Key issues included algorithm-driven content and lack of active engagement, setting the stage for a solution that transforms physical spaces into interactive art hubs.",
+  //       image: "/placeholder.svg"
+  //     },
+  //     {
+  //       title: "Develop",
+  //       description:
+  //         "Ideation & Prototyping – Our team brainstormed multiple concepts and quickly sketched low-fidelity wireframes. Through iterative testing and feedback sessions, we refined our ideas into a high-fidelity prototype that balanced interactivity with a seamless user experience.",
+  //       image: "/placeholder.svg"
+  //     },
+  //     {
+  //       title: "Deliver",
+  //       description:
+  //         "Final Refinements – After extensive usability testing, we polished the design and integrated features such as geotagged art trails, interactive storytelling, and real-world incentives. The final design was well received by local artists and early users, validating our approach.",
+  //       image: "/placeholder.svg"
+  //     }
+  //   ],
+  //   outcome:
+  //     "TamaGo received positive feedback from both artists and early adopters, demonstrating a clear demand for platforms that bridge the digital and physical art experience. The app was recognized as a promising solution to boost local art engagement and community building.",
+  //   reflection:
+  //     "Working on TamaGo underscored the importance of active engagement over passive consumption. We learned that by integrating technology with physical spaces, we can create deeper, more meaningful interactions between art and its audience. Future iterations will explore additional interactive features and expanded collaboration with local art communities.",
+  //   teamMembers: [
+  //     {
+  //       name: "David",
+  //       role: "Product Designer",
+  //       link: "https://example.com/david"
+  //     },
+  //     {
+  //       name: "Heral",
+  //       role: "UI/UX Designer",
+  //       link: "https://heralkumar.com"
+  //     },
+  //     {
+  //       name: "Yuna",
+  //       role: "User Researcher",
+  //       link: "https://example.com/yuna"
+  //     }
+  //   ],
+  //   promptColor: "#FFA631",
+  //   promptTextColor: "#FFA631",
+  //   areaOfFocus: "Arts & Community",
+  //   challengeMetrics: [
+  //     { number: "65%", label: "of users feel disconnected from local art communities" },
+  //     { number: "80%", label: "of artists struggle to reach niche audiences" },
+  //     { number: "50%", label: "of art consumers engage passively with digital content" }
+  //   ],
+  //   solutionMetrics: [
+  //     { number: "85%", label: "user satisfaction with interactive art experiences" },
+  //     { number: "4x", label: "increase in local art event engagement" },
+  //     { number: "75%", label: "of users found the app intuitive for discovering art" }
+  //   ],
+  //   resultMetrics: [
+  //     { number: "90%", label: "of early adopters would recommend Tamago" },
+  //     { number: "30%", label: "increase in active engagement during pilot events" },
+  //     { number: "8.5/10", label: "average user experience rating" }
+  //   ]
+  // },
   {
     slug: "Seelie",
     title: "Seelie",
@@ -112,13 +224,13 @@ export const projects: Project[] = [
         title: "Discover",
         description:
           "User Research – Interviews with Gen Z users revealed that confusing financial terms and outdated banking interfaces hinder money management\n\nCompetitive Analysis – Existing finance apps lack personalization and overwhelm users with complex interfaces instead of guiding them \n\nFeature Definition – We focused on AI-driven assistance, intuitive UI, and simplified banking education to make finance easier for Gen Z",
-        image: "/placeholder.svg?height=800&width=1200",
+        image: "/user personas - seelie/competitive-analysis.png",
       },
       {
         title: "Define",
         description:
-          "Using our research insights, we defined key pain points and developed detailed user personas. We set clear success metrics focused on enhancing financial literacy, improving budgeting efficiency, and increasing user engagement.",
-        image: "",
+          "Using our research insights, we developed two key user personas representing our target audience:\n\n1. Maya Tanaka - An international student from Japan who needs help understanding the Canadian banking system and managing multiple expenses\n2. Jordan Smith - A freelancer with ADHD who needs gentle reminders and simplified financial management\n\nThese personas helped us focus our design decisions on making financial management accessible, trustworthy, and engaging for Gen Z users.",
+        image: "/user personas - seelie/seelie-person1.jpg",
       },
       {
         title: "Develop",
@@ -135,7 +247,7 @@ export const projects: Project[] = [
     ],
     outcome:
       "Seelie received enthusiastic feedback from industry experts, with many intrigued by the unique features it held. The app was recognized for its innovative approach. With its interactive features and educational focus, Seelie has the potential to redefine how Gen Z approaches personal finance and targets financial literacy.",
-      reflection:
+    reflection:
       "Enhanced Interactivity & Advanced Insights\nExpand the prototype with detailed interactions (budget alerts, goal tracking) and integrate AI-driven recommendations for smarter financial planning.\n\nMobile-First Design\nOptimize the interface for mobile users, who make up the majority of our target audience.\n\nDark Mode\nAdd a dark mode feature to enhance usability and aesthetics for Gen Z users.\n\nUsability Testing\nConduct in-depth usability testing to refine the prototype and explore its full potential.",
     teamMembers: [
       {
@@ -315,9 +427,9 @@ export const projects: Project[] = [
       "Mobile Application\nDevelop a companion mobile app to allow users to report lost items and check status updates on the go.\n\nImage Recognition\nImplement AI-based image recognition to automatically categorize and match items based on photos.\n\nExpanded Deployment\nScale the system for deployment across multiple campuses with centralized administration and local management.\n\nIntegration Capabilities\nDevelop APIs to integrate with other university systems such as student information systems and campus security platforms.",
     teamMembers: [
       {
-      name: "Heral Kumar",
-      role: "Full-Stack Developer",
-      link: "https://www.linkedin.com/in/heral-kumar/",
+        name: "Heral Kumar",
+        role: "Full-Stack Developer",
+        link: "https://www.linkedin.com/in/heral-kumar/",
       },
     ],
     promptColor: "#0891b2",
@@ -438,7 +550,7 @@ export const projects: Project[] = [
       { number: "8.5/10", label: "average satisfaction rating from medical professionals" }
     ]
   },
-  
+
   // Add more projects as needed
 ]
 

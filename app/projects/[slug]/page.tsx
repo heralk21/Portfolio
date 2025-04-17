@@ -11,6 +11,7 @@ import Logo from "../../components/shared/site-logo"
 import { ThemeToggle } from "../../components/shared/theme-switcher"
 import { useTheme } from "next-themes"
 import dynamic from "next/dynamic"
+import HighlightedText from "../../components/shared/HighlightedText"
 
 // Dynamically import the UnderwaySign component
 const UnderwaySign = dynamic(
@@ -50,6 +51,16 @@ const MeloPersonas = dynamic(
   { ssr: false }
 )
 
+const SeeliePersonas = dynamic(
+  () => import('../../components/personas/SeeliePersonas'),
+  { ssr: false }
+)
+
+const TamagoPersonas = dynamic(
+  () => import('../../components/personas/TamagoPersonas'),
+  { ssr: false }
+)
+
 // Dynamically import the competitive analysis components
 const HeartRiskCompetitiveAnalysis = dynamic(
   () => import('../../components/analysis/HeartRiskCompetitiveAnalysis'),
@@ -58,6 +69,16 @@ const HeartRiskCompetitiveAnalysis = dynamic(
 
 const RecoverEaseCompetitiveAnalysis = dynamic(
   () => import('../../components/analysis/RecoverEaseCompetitiveAnalysis'),
+  { ssr: false }
+)
+
+const SeelieCompetitiveAnalysis = dynamic(
+  () => import('../../components/analysis/SeelieCompetitiveAnalysis'),
+  { ssr: false }
+)
+
+const TamagoCompetitiveAnalysis = dynamic(
+  () => import('../../components/analysis/TamagoCompetitiveAnalysis'),
   { ssr: false }
 )
 
@@ -299,49 +320,6 @@ const FadeInSection = ({ children, className = "" }: {
     >
       {children}
     </motion.div>
-  );
-};
-
-// Create a component for highlighted text
-const HighlightedText = ({ children, color = "#53b948" }: {
-  children: React.ReactNode,
-  color?: string
-}) => {
-  return (
-    <span 
-      className="relative inline-block font-semibold highlight-animation"
-      style={{ color }}
-    >
-      <style jsx>{`
-        .highlight-animation {
-          position: relative;
-        }
-        .highlight-animation::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 30%;
-          background-color: ${color};
-          opacity: 0.15;
-          z-index: -1;
-          transform-origin: bottom;
-          animation: pulse 3s infinite alternate;
-        }
-        @keyframes pulse {
-          0% {
-            opacity: 0.1;
-            transform: scaleY(0.8);
-          }
-          100% {
-            opacity: 0.2;
-            transform: scaleY(1);
-          }
-        }
-      `}</style>
-      {children}
-    </span>
   );
 };
 
@@ -966,7 +944,167 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                                 <MeloPersonas promptColor={project.promptColor} />
                               </>
                             ) : project.slug === "Seelie" ? (
-                              <SeelieResearchCharts promptColor={project.promptColor || "#53b948"} />
+                              <>
+                                <div className="prose prose-lg prose-invert max-w-none mb-8">
+                                  <p>
+                                    Our research revealed key insights about our target audience. We identified that {' '} 
+                                    <HighlightedText color={project.promptColor}> financial literacy </HighlightedText> {' '}
+                                    and {' '}
+                                    <HighlightedText color={project.promptColor}> budget management </HighlightedText> {' '}
+                                    are critical pain points for Gen Z users.
+                                  </p>
+                                  
+                                  {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                    <p key={idx}>{paragraph}</p>
+                                  ))}
+                                </div>
+                                
+                                <h3 className="text-xl font-semibold mt-8 mb-4">User Personas</h3>
+                                <SeeliePersonas promptColor={project.promptColor} />
+                                
+                                <h3 className="text-xl font-semibold mt-10 mb-4">Competitive Analysis</h3>
+                                <SeelieCompetitiveAnalysis promptColor={project.promptColor} />
+                                
+                                {/* {step.image && (
+                                  <FadeInImage
+                                    src={step.image}
+                                    alt={step.title}
+                                    width={1200}
+                                    height={800}
+                                    className="rounded-xl overflow-hidden my-6"
+                                  />
+                                )} */}
+                              </>
+                            ) : project.slug === "tamago" ? (
+                              <>
+                                <div className="w-full space-y-8">
+                                  <div className="prose prose-lg prose-invert max-w-none mb-8">
+                                    <p>
+                                      Our research revealed key insights about our target audience. We identified that {' '} 
+                                      <HighlightedText color={project.promptColor}> authentic connection </HighlightedText> {' '}
+                                      and {' '}
+                                      <HighlightedText color={project.promptColor}> real-world engagement </HighlightedText> {' '}
+                                      are critical needs for both artists and art enthusiasts.
+                                    </p>
+                                    
+                                    {step.description.split("\n\n").map((paragraph: string, idx: number) => (
+                                      <p key={idx}>{paragraph}</p>
+                                    ))}
+                                  </div>
+                                  
+                                  <div className="mt-8 bg-black/50 rounded-lg p-6 border border-yellow-800 flex flex-col">
+                                    <h3 className="text-xl font-semibold mb-4 text-yellow-400">User Personas</h3>
+                                    {/* Direct inline component as fallback */}
+                                    <div className="space-y-8 mt-6">
+                                      {/* Persona for a Local Artist */}
+                                      <UserPersonaCard
+                                        name="Lila Rivera"
+                                        subtitle="Local Visual Artist"
+                                        age={28}
+                                        location="Vancouver, Canada"
+                                        occupation="Painter & Muralist"
+                                        painPoints={[
+                                          "Struggles with digital algorithms that overshadow niche art.",
+                                          "Finds it hard to connect with a local audience.",
+                                          "Limited opportunities for live, interactive feedback.",
+                                          "Overwhelmed by mass-market platforms."
+                                        ]}
+                                        goals={[
+                                          "Build a local following without algorithm bias.",
+                                          "Engage directly with art enthusiasts in real-world settings.",
+                                          "Receive live feedback during interactive events.",
+                                          "Create a community that appreciates niche art."
+                                        ]}
+                                        imageUrl="/placeholder.svg"
+                                        color={project.promptColor}
+                                      />
+                                      
+                                      {/* Persona for an Art Enthusiast */}
+                                      <UserPersonaCard
+                                        name="Marcus Lee"
+                                        subtitle="Art Enthusiast & Community Organizer"
+                                        age={26}
+                                        location="Calgary, Canada"
+                                        occupation="Event Coordinator"
+                                        painPoints={[
+                                          "Passively scrolls through digital art feeds.",
+                                          "Finds it challenging to discover local art in a meaningful way.",
+                                          "Frustrated with lack of interactive art experiences.",
+                                          "Wants more personal, immersive art encounters."
+                                        ]}
+                                        goals={[
+                                          "Discover and engage with local art in real-world spaces.",
+                                          "Participate in interactive art events and scavenger hunts.",
+                                          "Connect with artists on a more personal level.",
+                                          "Transform art discovery from passive to active experience."
+                                        ]}
+                                        imageUrl="/placeholder.svg"
+                                        color={project.promptColor}
+                                      />
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="mt-10 bg-black/50 rounded-lg p-6 border border-yellow-800 flex flex-col">
+                                    <h3 className="text-xl font-semibold mb-4 text-yellow-400">Competitive Analysis</h3>
+                                    {/* Simple inline fallback for competitive analysis */}
+                                    <div className="space-y-8">
+                                      <p className="text-muted-foreground mb-4">
+                                        Our competitive analysis revealed that while existing platforms excel in their specific domains, none offer a comprehensive approach to connecting audiences with local art through interactive, real-world experiences.
+                                      </p>
+                                      <div className="overflow-x-auto">
+                                        <table className="w-full border-collapse border">
+                                          <thead>
+                                            <tr className="bg-muted/30">
+                                              <th className="p-3 text-center font-medium border-b border-r">#</th>
+                                              <th className="p-3 text-left font-medium border-b border-r min-w-[200px]">Features</th>
+                                              <th className="p-3 text-center font-medium border-b border-r">TamaGo</th>
+                                              <th className="p-3 text-center font-medium border-b border-r">Instagram</th>
+                                              <th className="p-3 text-center font-medium border-b border-r">TikTok</th>
+                                              <th className="p-3 text-center font-medium border-b border-r">Eventbrite</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr className="even:bg-muted/5">
+                                              <td className="p-3 border-b border-r text-center">1</td>
+                                              <td className="p-3 border-b border-r">Algorithm-Free Local Discovery</td>
+                                              <td className="p-3 border-b border-r text-center">✓</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                              <td className="p-3 border-b border-r text-center">✓</td>
+                                            </tr>
+                                            <tr className="even:bg-muted/5">
+                                              <td className="p-3 border-b border-r text-center">2</td>
+                                              <td className="p-3 border-b border-r">Interactive Real-World Engagement</td>
+                                              <td className="p-3 border-b border-r text-center">✓</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                            </tr>
+                                            <tr className="even:bg-muted/5">
+                                              <td className="p-3 border-b border-r text-center">3</td>
+                                              <td className="p-3 border-b border-r">Community Building for Niche Artists</td>
+                                              <td className="p-3 border-b border-r text-center">✓</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                              <td className="p-3 border-b border-r text-center">-</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  {step.image && (
+                                    <FadeInImage
+                                      src={step.image}
+                                      alt={step.title}
+                                      width={1200}
+                                      height={800}
+                                      className="rounded-xl overflow-hidden my-6"
+                                    />
+                                  )}
+                                </div>
+                              </>
                             ) : project.slug === "HeartRisk" ? (
                               <HeartRiskResearchCharts promptColor={project.promptColor || "#e11d48"} />
                             ) : project.slug === "RecoverEase" ? (
@@ -998,7 +1136,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                                 </div>
                                 
                                 {/* Project-specific content for Deliver step */}
-                                {project.slug === "Seelie" ? (
+                                {project.slug === "Seelie" && (
                                   <>
                                     <FadeInVideo 
                                       src="/seelie-video.mp4" 
@@ -1011,7 +1149,31 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
                                       Check out this video, highlighting my favourite and most GenZ feature of Seelie!
                                     </p>
                                   </>
-                                ) : step.image ? (
+                                )}
+                                
+                                {/* Tamago-specific content for Deliver step */}
+                                {project.slug === "tamago" && (
+                                  <>
+                                    <div className="grid md:grid-cols-2 gap-8 mt-8">
+                                      <FadeInImage
+                                        src="/tamago/final-design-1.png"
+                                        alt="Final Design - Artist View"
+                                        width={600}
+                                        height={400}
+                                        className="rounded-xl overflow-hidden border"
+                                      />
+                                      <FadeInImage
+                                        src="/tamago/final-design-2.png"
+                                        alt="Final Design - User View"
+                                        width={600}
+                                        height={400}
+                                        className="rounded-xl overflow-hidden border"
+                                      />
+                                    </div>
+                                  </>
+                                )}
+                                
+                                {step.image && project.slug !== "Seelie" && project.slug !== "tamago" ? (
                                   <FadeInImage
                                     src={step.image}
                                     alt={step.title}
